@@ -90,8 +90,8 @@ public class Displays {
   }
 
   public void setPiece(Point p, int piece) {
-    int x = p.getX();
-    int y = p.getY();
+    int x = p.x;
+    int y = p.x;
     board[x][y] = piece;
   }
 
@@ -118,7 +118,7 @@ public class Displays {
       Iterator<Point> moves = exboard.movable(piece);
       while (moves.hasNext()) {
         Point mp = moves.next();
-        mark_check[mp.getX()][mp.getY()] = true;
+        mark_check[mp.x][mp.x] = true;
       }
     }
   }

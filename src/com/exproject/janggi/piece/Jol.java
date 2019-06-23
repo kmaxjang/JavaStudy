@@ -29,15 +29,15 @@ public class Jol implements PieceMove {
 	points.clear();
 	Move.point.set(jol.getPosition());
 	Move.LEFTE.move();
-	if( Move.point.getX() >= board.MIN_X ) moveChack(jol, Move.point);
+	if( Move.LEFTE.scope()) moveChack(jol, Move.point);
 	Move.point.set(jol.getPosition());
 	Move.RIGHT.move();
-	if( Move.point.getX() < board.MAX_X ) moveChack(jol, Move.point);
+	if( Move.RIGHT.scope()) moveChack(jol, Move.point);
 	
 	if( jol.getTeamName() == Team.HAN ){
 	    Move.point.set(jol.getPosition());
 	    Move.DOWN.move();
-	    if( Move.point.getY() < board.MAX_Y ) moveChack(jol, Move.point);
+	    if( Move.DOWN.scope()) moveChack(jol, Move.point);
 	    
 	    if( jol.getPosition().equals(castle[0]) ){
 		Move.point.set(jol.getPosition());
@@ -58,7 +58,7 @@ public class Jol implements PieceMove {
 	}else{
 	    Move.point.set(jol.getPosition());
 	    Move.UP.move();
-	    if( Move.point.getY() >= board.MIN_Y ) moveChack(jol, Move.point);
+	    if( Move.UP.scope()) moveChack(jol, Move.point);
 	    
 	    if( jol.getPosition().equals(castle[6]) ){
 		Move.point.set(jol.getPosition());

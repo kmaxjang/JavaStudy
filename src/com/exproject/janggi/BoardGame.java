@@ -68,7 +68,7 @@ public class BoardGame {
     Iterator<Piece> i = bd.getPieceList();
     while (i.hasNext()) {
       piece = i.next();
-      board[piece.getPosition().getX()][piece.getPosition().getY()] = piece.getClassName().NUMBER;
+      board[piece.getPosition().x][piece.getPosition().x] = piece.getClassName().NUMBER;
     }
   }
 
@@ -77,7 +77,7 @@ public class BoardGame {
     Iterator<Point> i = bd.movable(piece);
     while (i.hasNext()) {
       p = i.next();
-      board[p.getX()][p.getY()] = movable_mark;
+      board[p.x][p.x] = movable_mark;
     }
   }
 

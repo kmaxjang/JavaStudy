@@ -16,7 +16,7 @@ public class PieceSet implements Piece {
 
   public PieceSet(String piece) {
     pieceinfo = piece.toCharArray();
-    System.out.println("문자"+getTeamName()+" "+getClassName()+"좌표"+getPosition().getX()+" "+getPosition().getY());
+    System.out.println("문자"+getTeamName()+" "+getClassName()+"좌표"+getPosition().x+" "+getPosition().y);
   }
 
   @Override
@@ -80,8 +80,8 @@ public class PieceSet implements Piece {
   public boolean move(Point p, Piece killpiece) {
     pieceinfo[Info.OLD_X.POINT] = pieceinfo[Info.NOW_X.POINT];
     pieceinfo[Info.OLD_Y.POINT] = pieceinfo[Info.NOW_Y.POINT];
-    pieceinfo[Info.NOW_X.POINT] = (char)(p.getX()+0x30);
-    pieceinfo[Info.NOW_Y.POINT] = (char)(p.getY()+0x30);
+    pieceinfo[Info.NOW_X.POINT] = (char)(p.x+0x30);
+    pieceinfo[Info.NOW_Y.POINT] = (char)(p.y+0x30);
 
     pieceinfo[Info.KILL_CLASS.POINT] = (killpiece != null) ?killpiece.getClassName().NUMBER.charAt(0) : '0';
     return true;
@@ -89,9 +89,8 @@ public class PieceSet implements Piece {
 
   @Override
   public Point getPosition() {
-      now_point.setX(parseInt(Info.NOW_X));
-      now_point.setY(parseInt(Info.NOW_Y));
+      now_point.x = parseInt(Info.NOW_X);
+      now_point.y = parseInt(Info.NOW_Y);
     return now_point;
   }
-
 }

@@ -14,104 +14,60 @@ public class Sag implements PieceMove {
     private Board board;
     private Points points = new Points(8);
     private Piece tmp_piece;
+    private Point tmp_point = new Point();
     
-    public Sag(  ) {
+    public Sag() {
 	
+    }
+    
+    public void sagWay( Move m, Piece sag ){
+	m.move();
+	if( m.scope() && board.getPiece(Move.point) == null ){
+	    m.move();
+	    if( m.scope() ){
+		moveChack(sag, Move.point);
+	    }
+	}
     }
     
     /*
      * null = 기록 다른편일땄1�7 = 기록 장군을1�7 아닐땄1�7= 기록
      */
-    public Iterator<Point> movable(Board b, Piece sag ){
+    public Iterator<Point> movable( Board b, Piece sag ){
 	this.board = b;
 	points.clear();
 	Move.point.set(sag.getPosition());
 	Move.UP.move();
-	Move.UP.move();
-	Move.UP.move();
-	if( Move.point.getY() >= board.MIN_Y ){
-	    Move.DOWN.move();
-	    Move.DOWN.move();
-	    if( board.getPiece(Move.point) == null ){
-		Move.LEFTEUP.move();
-		if( Move.point.getX() > board.MIN_X && board.getPiece(Move.point) == null ){
-		    Move.LEFTEUP.move();
-		    moveChack(sag, Move.point);
-		    Move.RIGHTDOWN.move();
-		}
-		Move.RIGHT.move();
-		Move.RIGHT.move();
-		if( Move.point.getX() < board.MAX_X - 1 && board.getPiece(Move.point) == null ){
-		    Move.RIGHTUP.move();
-		    moveChack(sag, Move.point);
-		}
-	    }
+	if( Move.UP.scope() && board.getPiece(Move.point) == null ){
+	    tmp_point = Move.point;
+	    sagWay(Move.LEFTEUP, sag);
+	    Move.point.set(tmp_point);
+	    sagWay(Move.RIGHTUP, sag);
 	}
 	Move.point.set(sag.getPosition());
 	Move.DOWN.move();
-	Move.DOWN.move();
-	Move.DOWN.move();
-	if( Move.point.getY() < board.MAX_Y ){
-	    Move.UP.move();
-	    Move.UP.move();
-	    if( board.getPiece(Move.point) == null ){
-		Move.LEFTEDOWN.move();
-		if( Move.point.getX() > board.MIN_X && board.getPiece(Move.point) == null ){
-		    Move.LEFTEDOWN.move();
-		    moveChack(sag, Move.point);
-		    Move.RIGHTUP.move();
-		}
-		Move.RIGHT.move();
-		Move.RIGHT.move();
-		if( Move.point.getX() < board.MAX_X - 1 && board.getPiece(Move.point) == null ){
-		    Move.RIGHTDOWN.move();
-		    moveChack(sag, Move.point);
-		}
-	    }
+	if( Move.DOWN.scope() && board.getPiece(Move.point) == null ){
+	    tmp_point = Move.point;
+	    sagWay(Move.LEFTEDOWN, sag);
+	    Move.point.set(tmp_point);
+	    sagWay(Move.RIGHTDOWN, sag);
 	}
 	Move.point.set(sag.getPosition());
 	Move.LEFTE.move();
-	Move.LEFTE.move();
-	Move.LEFTE.move();
-	if( Move.point.getX() >= board.MIN_X ){
-	    Move.RIGHT.move();
-	    Move.RIGHT.move();
-	    if( board.getPiece(Move.point) == null ){
-		Move.LEFTEUP.move();
-		if( Move.point.getY() > board.MIN_Y && board.getPiece(Move.point) == null ){
-		    Move.LEFTEUP.move();
-		    moveChack(sag, Move.point);
-		    Move.RIGHTDOWN.move();
-		}
-		Move.DOWN.move();
-		Move.DOWN.move();
-		if( Move.point.getY() < board.MAX_Y - 1 && board.getPiece(Move.point) == null ){
-		    Move.LEFTEDOWN.move();
-		    moveChack(sag, Move.point);
-		}
-	    }
+	if( Move.LEFTE.scope() && board.getPiece(Move.point) == null ){
+	    tmp_point = Move.point;
+	    sagWay(Move.LEFTEUP, sag);
+	    Move.point.set(tmp_point);
+	    sagWay(Move.LEFTEDOWN, sag);
 	}
+	
 	Move.point.set(sag.getPosition());
 	Move.RIGHT.move();
-	Move.RIGHT.move();
-	Move.RIGHT.move();
-	if( Move.point.getX() < board.MAX_X ){
-	    Move.LEFTE.move();
-	    Move.LEFTE.move();
-	    if( board.getPiece(Move.point) == null ){
-		Move.RIGHTUP.move();
-		if( Move.point.getY() > board.MIN_Y && board.getPiece(Move.point) == null ){
-		    Move.RIGHTUP.move();
-		    moveChack(sag, Move.point);
-		    Move.LEFTEDOWN.move();
-		}
-		Move.DOWN.move();
-		Move.DOWN.move();
-		if( Move.point.getY() < board.MAX_Y - 1 && board.getPiece(Move.point) == null ){
-		    Move.RIGHTDOWN.move();
-		    moveChack(sag, Move.point);
-		}
-	    }
+	if( Move.RIGHT.scope() && board.getPiece(Move.point) == null ){
+	    tmp_point = Move.point;
+	    sagWay(Move.RIGHTUP, sag);
+	    Move.point.set(tmp_point);
+	    sagWay(Move.RIGHTDOWN, sag);
 	}
 	return points.getMovable();
     }

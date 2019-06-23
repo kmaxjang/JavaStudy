@@ -26,22 +26,22 @@ public class Cha implements PieceMove {
 	points.clear();
 	Move.point.set(cha.getPosition());
 	Move.UP.move();
-	while( Move.point.getY() >= board.MIN_Y && moveChack(cha, Move.point) ){
+	while( Move.UP.scope() && moveChack(cha, Move.point) ){
 	    Move.UP.move();
 	}
 	Move.point.set(cha.getPosition());
 	Move.DOWN.move();
-	while( Move.point.getY() < board.MAX_Y && moveChack(cha, Move.point) ){
+	while( Move.DOWN.scope() && moveChack(cha, Move.point) ){
 	    Move.DOWN.move();
 	}
 	Move.point.set(cha.getPosition());
 	Move.LEFTE.move();
-	while( Move.point.getX() >= board.MIN_X && moveChack(cha, Move.point) ){
+	while( Move.LEFTE.scope() && moveChack(cha, Move.point) ){
 	    Move.LEFTE.move();
 	}
 	Move.point.set(cha.getPosition());
 	Move.RIGHT.move();
-	while( Move.point.getX() < board.MAX_X && moveChack(cha, Move.point) ){
+	while( Move.RIGHT.scope() && moveChack(cha, Move.point) ){
 	    Move.RIGHT.move();
 	}
 	
@@ -90,14 +90,13 @@ public class Cha implements PieceMove {
 	return points.getMovable();
     }
     
-    // �3�3�9�4�3�1�2�2 �3�3�9�4�7�5�8�6�4�7�5�9
     private boolean moveChack( Piece cha, Point p ){
 	tmp_piece = board.getPiece(p);
 	if( tmp_piece == null ){
 	    points.add(p);
 	    return true;
 	}
-	if( cha.isTeam(tmp_piece)){
+	if(!cha.isTeam(tmp_piece)){
 	    points.add(p);
 	}
 	return false;

@@ -10,98 +10,72 @@ import com.exproject.janggi.util.Point;
 import com.exproject.janggi.util.Points;
 
 public class Ma implements PieceMove {
-  private Board board;
-  private Points points = new Points(8);
-  private Piece tmp_piece;
-
-  public Ma() {}
-
-  /*
-   * null = 기록 다른편일땄1�7 = 기록 장군을1�7 아닐땄1�7= 기록
-   */
-  public Iterator<Point> movable(Board b, Piece ma) {
-    this.board = b;
-    points.clear();
-    Move.point.set(ma.getPosition());
-    Move.UP.move();
-    Move.UP.move();
-    if (Move.UP.scope()) {
-      Move.DOWN.move();
-      if (board.getPiece(Move.point) == null) {
-        Move.LEFTEUP.move();
-        if (Move.LEFTEUP.scope()) {
-          moveChack(ma, Move.point);
-        }
-        Move.RIGHT.move();
-        Move.RIGHT.move();
-        if (Move.RIGHT.scope()) {
-          moveChack(ma, Move.point);
-        }
-      }
+    private Board board;
+    private Points points = new Points(8);
+    private Piece tmp_piece;
+    private Point tmp_point = new Point();
+    
+    public Ma() {
     }
-    Move.point.set(ma.getPosition());
-    Move.DOWN.move();
-    Move.DOWN.move();
-    if(Move.DOWN.scope()) {
-      Move.UP.move();
-      if (board.getPiece(Move.point) == null) {
-        Move.LEFTEDOWN.move();
-        if (Move.LEFTEDOWN.scope()) {
-          moveChack(ma, Move.point);
-        }
-        Move.RIGHT.move();
-        Move.RIGHT.move();
-        if (Move.RIGHT.scope()) {
-          moveChack(ma, Move.point);
-        }
-      }
+    
+    public void maWay( Move m, Piece sag ){
+	m.move();
+	if( m.scope() ){
+	    moveChack(sag, Move.point);
+	}
     }
-    Move.point.set(ma.getPosition());
-    Move.LEFTE.move();
-    Move.LEFTE.move();
-    if (Move.LEFTE.scope()) {
-      Move.RIGHT.move();
-      if (board.getPiece(Move.point) == null) {
-        Move.LEFTEUP.move();
-        if(Move.LEFTEUP.scope()) {
-          moveChack(ma, Move.point);
-        }
-        Move.DOWN.move();
-        Move.DOWN.move();
-        if (Move.DOWN.scope()) {
-          moveChack(ma, Move.point);
-        }
-      }
+    
+    /*
+     * null = 기록 다른편일땄1�7 = 기록 장군을1�7 아닐땄1�7= 기록
+     */
+    public Iterator<Point> movable( Board b, Piece ma ){
+	this.board = b;
+	points.clear();
+	Move.point.set(ma.getPosition());
+	Move.UP.move();
+	if( Move.UP.scope() && board.getPiece(Move.point) == null ){
+	    tmp_point = Move.point;
+	    maWay(Move.LEFTEUP, ma);
+	    Move.point.set(tmp_point);
+	    maWay(Move.RIGHTUP, ma);
+	}
+	Move.point.set(ma.getPosition());
+	Move.DOWN.move();
+	if( Move.DOWN.scope() && board.getPiece(Move.point) == null ){
+	    tmp_point = Move.point;
+	    maWay(Move.LEFTEDOWN, ma);
+	    Move.point.set(tmp_point);
+	    maWay(Move.RIGHTDOWN, ma);
+	}
+	Move.point.set(ma.getPosition());
+	Move.LEFTE.move();
+	if( Move.LEFTE.scope() && board.getPiece(Move.point) == null ){
+	    tmp_point = Move.point;
+	    maWay(Move.LEFTEUP, ma);
+	    Move.point.set(tmp_point);
+	    maWay(Move.LEFTEDOWN, ma);
+	}
+	
+	Move.point.set(ma.getPosition());
+	Move.RIGHT.move();
+	if( Move.RIGHT.scope() && board.getPiece(Move.point) == null ){
+	    tmp_point = Move.point;
+	    maWay(Move.RIGHTUP, ma);
+	    Move.point.set(tmp_point);
+	    maWay(Move.RIGHTDOWN, ma);
+	}
+	return points.getMovable();
     }
-    Move.point.set(ma.getPosition());
-    Move.RIGHT.move();
-    Move.RIGHT.move();
-    if (Move.RIGHT.scope()) {
-      Move.LEFTE.move();
-      if (board.getPiece(Move.point) == null) {
-        Move.RIGHTUP.move();
-        if (Move.RIGHTUP.scope()) {
-          moveChack(ma, Move.point);
-        }
-        Move.DOWN.move();
-        Move.DOWN.move();
-        if (Move.DOWN.scope()) {
-          moveChack(ma, Move.point);
-        }
-      }
+    
+    private boolean moveChack( Piece ma, Point p ){
+	tmp_piece = board.getPiece(p);
+	if( tmp_piece == null ){
+	    points.add(p);
+	    return true;
+	}
+	if( ma.isTeam(tmp_piece) ){
+	    points.add(p);
+	}
+	return false;
     }
-    return points.getMovable();
-  }
-
-  private boolean moveChack(Piece ma, Point p) {
-    tmp_piece = board.getPiece(p);
-    if (tmp_piece == null) {
-      points.add(p);
-      return true;
-    }
-    if (ma.isTeam(tmp_piece)) {
-      points.add(p);
-    }
-    return false;
-  }
 }

@@ -143,7 +143,7 @@ public class Sa implements PieceMove {
 	    points.add(p);
 	    return true;
 	}
-	if( sa.isTeam( tmp_piece) ){
+	if( !sa.isTeam( tmp_piece) ){
 	    points.add(p);
 	}
 	return false;
