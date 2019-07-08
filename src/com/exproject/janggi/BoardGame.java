@@ -42,7 +42,7 @@ public class BoardGame {
     }
     
     piece = bd.getPiece(p);
-    if (piece != null && piece.getTeamName() == Team.CHO) {
+    if (piece != null && piece.getTeam() == Team.CHO) {
       display(piece);
       choice = true;
     }
@@ -68,7 +68,7 @@ public class BoardGame {
     Iterator<Piece> i = bd.getPieceList();
     while (i.hasNext()) {
       piece = i.next();
-      board[piece.getPosition().x][piece.getPosition().x] = piece.getClassName().NUMBER;
+      board[piece.getPosition().x][piece.getPosition().x] = piece.getClassName().number;
     }
   }
 

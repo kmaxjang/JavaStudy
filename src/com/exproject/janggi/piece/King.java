@@ -16,16 +16,16 @@ public class King implements PieceMove {
     private Point[] castle;
     private Piece tmp_piece;
     
-    public King( ) {
-	
+    public King(Board board) {
+	this.board = board;
     }
     
     /*
      * null = 기록 다른편일땄1�7 = 기록 장군을1�7 아닐땄1�7= 기록
      */
-    public Iterator<Point> movable( Board b, Piece king ){
-	this.board = b;
-	castle = (king.getTeamName() == Team.HAN) ? board.castleup : board.castledown;
+    public Iterator<Point> movable(Piece king ){
+	
+	castle = (king.getTeam() == Team.HAN) ? board.castleup : board.castledown;
 	points.clear();
 	if( king.getPosition().equals(castle[0]) ){
 	    Move.point.set(king.getPosition());
@@ -142,7 +142,7 @@ public class King implements PieceMove {
 	    points.add(p);
 	    return true;
 	}
-	if( king.isTeam( tmp_piece) ){
+	if(!king.equalsTeam( tmp_piece) ){
 	    points.add(p);
 	}
 	return false;

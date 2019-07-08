@@ -3,67 +3,62 @@ package com.exproject.janggi.interfacemod;
 import com.exproject.janggi.util.Point;
 
 // 장기말 정의 인터페이스
+// 1= 한
+// 2 = 초
+// 1	2	3	4	5	6	7
+//왕	졸	사	상	마	포	차
 
-public interface Piece {
+public interface Piece{
     
     public enum Info{
-	TEAM( 0),
-	CLASS( 1),
-	NOW_X( 2),
-	NOW_Y( 3),
-	OLD_X( 4),
-	OLD_Y( 5),
-	KILL_CLASS( 6);
+	TEAM(0), CLASS(1), NOW_X(2), NOW_Y(3), OLD_X(4), OLD_Y(5), KILL(6);
 	
-	public final int POINT;
+	public final int point;
 	
 	private Info( int point ) {
-	    this.POINT = point;
+	    this.point = point;
 	}
     };
     
     public enum Team{
-	CHO("2"),
-	HAN("1");
+	HAN("1", 1.5), CHO("2", 0);
 	
-	public final String NUMBER;
+	public final String number;
+	public final double score;
 	
-	private Team(String number) {
-	    NUMBER = number;	    
+	private Team( String number, double score ) {
+	    this.number = number;
+	    this.score = score;
 	}
     }
     
     public enum ClassName{
-	KING( "1"),
-	JOL( "2"),
-	SA( "3"),
-	SAG( "4"),
-	MA( "5"),
-	POO( "6"),
-	CHA( "7");
+	KING("1", 0), JOL("2", 2), SA("3", 3), SAG("4", 3), MA("5", 5), POO("6", 7), CHA("7", 13);
 	
-	public final String NUMBER;
+	public final String number;
+	public final double score;
 	
-	private ClassName( String classnumber ) {
-	    this.NUMBER = classnumber;
+	private ClassName( String classnumber, double score ) {
+	    this.number = classnumber;
+	    this.score = score;
 	}
     }
     
     public ClassName getClassName(); // 장기말 이름 왕 차 포 마 상 쫄(병) 사
     
-    public Team getTeamName(); // 초 한
+    public ClassName getKillClass();
     
-    public boolean isTeam(Piece piece); // 장기 편 true= 한 false= 초
+    public Team getTeam(); // 초 한
     
-    public String info(); // 문자정보 7자리
+    public boolean equalsTeam(Piece piece);
     
-    public int infoCommand(); // 7자리 정보
+    public int info(); // 문자정보 7자리
     
     public int parseInt( Info p ); // 7자리 개별정수
     
     public String parse( Info p ); // 7자리 개별문자
     
-    public boolean move( Point move, Piece killclass ); // 이동
+    public boolean move( Point move, ClassName killclass ); // 이동
     
-    public Point getPosition(); // 현재위치   
+    public Point getPosition(); // 현재위치
 }

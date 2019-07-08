@@ -25,7 +25,7 @@ public class Points {
     }
     
     public boolean add( Point p ){
-	return add(p.x, p.x);
+	return add(p.x, p.y);
     }
     
     public boolean add( int x, int y ){

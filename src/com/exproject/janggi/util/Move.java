@@ -11,8 +11,8 @@ public enum Move{
     DOWN( 0, 1),
     RIGHTDOWN( 1, 1);
     
-    private int movex;
-    private int movey;
+    private int move_x;
+    private int move_y;
     
     public static final int min_x = 0;
     public static final int min_y = 0;
@@ -23,15 +23,17 @@ public enum Move{
     public static final Point point = new Point(); // 좌표기역
     
     private Move( int x, int y ) {
-	movex = x;
-	movey = y;
+	move_x = x;
+	move_y = y;
     }
     
+    // 이동
     public void move(){
-	point.x += movex;
-	point.y += movey;
+	point.x += move_x;
+	point.y += move_y;
     }
     
+    //이동반복
     public void move( int move ){
 	if( move <= 1 ){
 	    move();
@@ -42,6 +44,7 @@ public enum Move{
 	}
     }
     
+    //최대최소치 판정
     public boolean scope(){
 	switch( this ){
 	    case LEFTEUP :
@@ -58,7 +61,7 @@ public enum Move{
 		return(Move.LEFTE.scope() && Move.DOWN.scope());
 	    case DOWN :
 		return(point.y < max_y);
-	    case RIGHTDOWN :
+	    case RIGHTDOWN :		
 		return(Move.RIGHT.scope() && Move.DOWN.scope());
 	}
 	return false;

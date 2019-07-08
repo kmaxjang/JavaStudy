@@ -18,7 +18,7 @@ public class Checkmate {
 	m.move();
 	while( m.scope() ){
 	    tmp_piece = board.getPiece(Move.point);
-	    if( tmp_piece != null && !king.isTeam(tmp_piece) && tmp_piece.getClassName() == ClassName.CHA ){
+	    if( tmp_piece != null && !king.equalsTeam(tmp_piece) && tmp_piece.getClassName() == ClassName.CHA ){
 		return true;
 	    }
 	}

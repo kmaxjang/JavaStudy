@@ -17,16 +17,16 @@ public class Sa implements PieceMove {
     private Point[] castle;
     private Piece tmp_piece;
     
-    public Sa(  ) {
-	
+    public Sa(Board board) {
+	this.board = board;
     }
     
     /*
      * null = 기록 다른편일땄1�7 = 기록 장군을1�7 아닐땄1�7= 기록
      */
-    public Iterator<Point> movable(Board b, Piece sa ){
-	this.board = b;
-	castle = (sa.getTeamName() == Team.HAN) ? board.castleup : board.castledown;
+    public Iterator<Point> movable(Piece sa ){
+	
+	castle = (sa.getTeam() == Team.HAN) ? board.castleup : board.castledown;
 	points.clear();
 	if( sa.getPosition().equals(castle[0]) ){
 	    Move.point.set(sa.getPosition());
@@ -143,7 +143,7 @@ public class Sa implements PieceMove {
 	    points.add(p);
 	    return true;
 	}
-	if( !sa.isTeam( tmp_piece) ){
+	if(!sa.equalsTeam( tmp_piece) ){
 	    points.add(p);
 	}
 	return false;

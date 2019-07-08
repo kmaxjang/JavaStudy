@@ -9,23 +9,63 @@ import com.exproject.janggi.util.Move;
 import com.exproject.janggi.util.Point;
 import com.exproject.janggi.util.Points;
 
-public class Poo implements PieceMove {
+public class Poo implements PieceMove{
+    private Piece poo;
     private Board board;
     private Points points = new Points(21);
     private Piece tmp_piece;
     
-    public Poo() {
+    public Poo(Board board) {
+	this.board = board;
+    }   
+    
+    public Iterator<Point> movable(Piece poo ){
+	this.poo = poo;
 	
+	points.clear();
+	
+	Move.point.set(poo.getPosition());
+	pooWay(Move.UP);
+	
+	Move.point.set(poo.getPosition());
+	pooWay(Move.DOWN);
+	
+	Move.point.set(poo.getPosition());
+	pooWay(Move.LEFTE);
+	
+	Move.point.set(poo.getPosition());
+	pooWay(Move.RIGHT);
+	
+	Move.point.set(poo.getPosition());
+	if(Move.point.equals(board.castleup[0]) || Move.point.equals(board.castledown[0])){
+	    castleWay(Move.RIGHTDOWN);	    
+	}else if(Move.point.equals(board.castleup[2]) || Move.point.equals(board.castledown[2])){
+	    castleWay(Move.LEFTEDOWN);
+	}else if(Move.point.equals(board.castleup[6]) || Move.point.equals(board.castledown[6])){
+	    castleWay(Move.RIGHTUP);
+	}else if(Move.point.equals(board.castleup[8]) || Move.point.equals(board.castledown[8])){
+	    castleWay(Move.LEFTEUP);
+	}
+	return points.getMovable();
+    }
+
+    private void castleWay(Move m) {	
+	m.move();
+	tmp_piece = board.getPiece(Move.point);
+	if(tmp_piece != null && !tmp_piece.getClassName().equals(Piece.ClassName.POO)){
+	    m.move();
+	    moveChack(Move.point);
+	}
     }
     
-    private void pooWay(Move m, Piece poo){
+    private void pooWay( Move m){
 	m.move();
-	while( m.scope() ){
+	while(m.scope()){
 	    tmp_piece = board.getPiece(Move.point);
-	    if( tmp_piece != null ){
-		if( !tmp_piece.getClassName().equals(Piece.ClassName.POO) ){
-		    m.move();
-		    while( m.scope() && moveChack(poo, Move.point) ){
+	    if(tmp_piece != null){
+		if(!tmp_piece.getClassName().equals(Piece.ClassName.POO)){
+		    m.move();		    
+		    while(m.scope() && moveChack(Move.point)){
 			m.move();
 		    }
 		}
@@ -36,68 +76,13 @@ public class Poo implements PieceMove {
 	}
     }
     
-    /*
-     * null = 기록 다른편일땄1�7 = 기록 장군을1�7 아닐땄1�7= 기록
-     */
-    public Iterator<Point> movable( Board b, Piece poo ){
-	this.board = b;
-	points.clear();
-	
-	Move.point.set(poo.getPosition());
-	pooWay(Move.UP, poo);
-	
-	Move.point.set(poo.getPosition());
-	pooWay(Move.DOWN, poo);
-	
-	Move.point.set(poo.getPosition());
-	pooWay(Move.LEFTE, poo);
-	
-	Move.point.set(poo.getPosition());
-	pooWay(Move.RIGHT, poo);
-	
-	if( poo.getPosition().equals(board.castleup[0]) || poo.getPosition().equals(board.castledown[0]) ){
-	    Move.point.set(poo.getPosition());
-	    Move.RIGHTDOWN.move();
-	    tmp_piece = board.getPiece(Move.point);
-	    if( tmp_piece != null && !tmp_piece.getClassName().equals(Piece.ClassName.POO) ){
-		Move.RIGHTDOWN.move();
-		moveChack(poo, Move.point);
-	    }
-	}else if( poo.getPosition().equals(board.castleup[2]) || poo.getPosition().equals(board.castledown[2]) ){
-	    Move.point.set(poo.getPosition());
-	    Move.LEFTEDOWN.move();
-	    tmp_piece = board.getPiece(Move.point);
-	    if( tmp_piece != null && !tmp_piece.getClassName().equals(Piece.ClassName.POO) ){
-		Move.LEFTEDOWN.move();
-		moveChack(poo, Move.point);
-	    }
-	}else if( poo.getPosition().equals(board.castleup[6]) || poo.getPosition().equals(board.castledown[6]) ){
-	    Move.point.set(poo.getPosition());
-	    Move.RIGHTUP.move();
-	    tmp_piece = board.getPiece(Move.point);
-	    if( tmp_piece != null && !tmp_piece.getClassName().equals(Piece.ClassName.POO) ){
-		Move.RIGHTUP.move();
-		moveChack(poo, Move.point);
-	    }
-	}else if( poo.getPosition().equals(board.castleup[8]) || poo.getPosition().equals(board.castledown[8]) ){
-	    Move.point.set(poo.getPosition());
-	    Move.LEFTEUP.move();
-	    tmp_piece = board.getPiece(Move.point);
-	    if( tmp_piece != null && !tmp_piece.getClassName().equals(Piece.ClassName.POO) ){
-		Move.LEFTEUP.move();
-		moveChack(poo, Move.point);
-	    }
-	}
-	return points.getMovable();
-    }
-    
-    private boolean moveChack( Piece poo, Point p ){
+    private boolean moveChack(Point p ){	
 	tmp_piece = board.getPiece(p);
-	if( tmp_piece == null ){
+	if(tmp_piece == null){
 	    points.add(p);
 	    return true;
 	}
-	if( !poo.isTeam(tmp_piece) && !tmp_piece.getClassName().equals(Piece.ClassName.POO) ){
+	if(!tmp_piece.getClassName().equals(Piece.ClassName.POO) && !tmp_piece.equalsTeam(poo)){
 	    points.add(p);
 	}
 	return false;
