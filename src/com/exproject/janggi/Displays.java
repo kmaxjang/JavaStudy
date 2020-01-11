@@ -1,4 +1,4 @@
-package com.exproject.pattern.composite;
+package com.exproject.janggi;
 
 import java.util.Iterator;
 
@@ -129,13 +129,13 @@ public class Displays{
 	ds.displaysUpdata(exboard.getPieceList());
 	piece = exboard.getPiece(0, 3);
 	if(piece != null){
-	    ds.moveable(exboard.movable(piece));
+	    ds.moveable(piece.movable());
 	}else{
 	    ds.moveable(null);
 	}
 	tmp_point.set(1, 3);
-	if(exboard.setMove(piece, tmp_point)) {
-	  System.out.println("말이동");  
+	if(exboard.setMove(piece, tmp_point)){
+	    System.out.println("말이동");
 	}
 	ds.displaysUpdata(exboard.getPieceList());
 	

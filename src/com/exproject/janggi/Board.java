@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.exproject.janggi.interfacemod.Piece;
-import com.exproject.janggi.interfacemod.PieceMove;
 import com.exproject.janggi.piece.Cha;
 import com.exproject.janggi.piece.Jol;
 import com.exproject.janggi.piece.King;
 import com.exproject.janggi.piece.Ma;
-import com.exproject.janggi.piece.PieceSet;
 import com.exproject.janggi.piece.Poo;
 import com.exproject.janggi.piece.Sa;
 import com.exproject.janggi.piece.Sag;
@@ -52,8 +50,7 @@ public class Board{
 	new Point(4, 9),
 	new Point(5, 9),
 	};
-    private PieceMove pm = null;
-    
+	
     private int[] defaultpieceset =
 	{
 	1700000, 1612120, 1330300, 1141410, 1350500, 1672720, 1780800, 1203030, 1223230, 1243430,
@@ -63,7 +60,7 @@ public class Board{
 	
     public Board() {
 	for(int pieceint : defaultpieceset){
-	    setPiece(new PieceSet(pieceint));
+	    setPiece(pieceint);
 	}
 	
 	int[] han =
@@ -72,11 +69,11 @@ public class Board{
 	    { 2419190, 2529290, 2469690, 2579790 };
 	    
 	for(int piece : han){
-	    setPiece(new PieceSet(piece));
+	    setPiece(piece);
 	}
 	
 	for(int piece : cho){
-	    setPiece(new PieceSet(piece));
+	    setPiece(piece);
 	}
     }
     
@@ -89,23 +86,43 @@ public class Board{
 	return index(p);
     }
     
-    private void setPiece( Piece piece ){
-	if(piece != null){
-	    piece_list.add(piece);
+    private void setPiece( int piece ){	
+	switch((piece / 100000) % 10){
+	    case 7 :
+		piece_list.add(new Cha(this, piece));
+		break;
+	    case 6 :
+		piece_list.add(new Poo(this, piece));
+		break;
+	    case 5 :
+		piece_list.add(new Ma(this, piece));
+		break;
+	    case 4 :
+		piece_list.add(new Sag(this, piece));
+		break;
+	    case 3 :
+		piece_list.add(new Sa(this, piece));
+		break;
+	    case 2 :
+		piece_list.add(new Jol(this, piece));
+		break;
+	    case 1 :
+		piece_list.add(new King(this, piece));
+		break;
 	}
     }
     
     public boolean setMove( Piece piece, Point move ){
-	Iterator<Point> move_list = movable(piece);
+	Iterator<Point> move_list = piece.movable();
 	while(move_list.hasNext()){
 	    if(move_list.next().equals(move)){
 		Piece kill = index(move);
 		if(kill != null){
 		    piece_list.remove(kill);
 		    piece.move(move, kill.getClassName());
-		}else {
-		 piece.move(move, null);  
-		}		
+		}else{
+		    piece.move(move, null);
+		}
 		orderlist.add(piece.toString());
 		return true;
 	    }
@@ -126,37 +143,4 @@ public class Board{
 	return null;
     }
     
-    public Iterator<Point> movable( Piece piece ){
-	switch(piece.getClassName()){
-	    case CHA :
-		pm = new Cha(this);
-		System.out.println("차");
-		break;
-	    case POO :
-		pm = new Poo(this);
-		System.out.println("포");
-		break;
-	    case MA :
-		pm = new Ma(this);
-		System.out.println("마");
-		break;
-	    case SAG :
-		pm = new Sag(this);
-		System.out.println("상");
-		break;
-	    case JOL :
-		pm = new Jol(this);
-		System.out.println("졸");
-		break;
-	    case SA :
-		pm = new Sa(this);
-		System.out.println("사");
-		break;
-	    case KING :
-		pm = new King(this);
-		System.out.println("왕");
-		break;
-	}
-	return pm.movable(piece);
-    }
 }

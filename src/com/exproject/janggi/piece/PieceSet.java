@@ -1,10 +1,12 @@
 package com.exproject.janggi.piece;
 
+import java.util.Iterator;
+
 import com.exproject.janggi.interfacemod.Piece;
 import com.exproject.janggi.util.Point;
 
 // 장기말 기본정의 Piece인터페이스 구현
-public class PieceSet implements Piece {
+public abstract class PieceSet implements Piece {
 
   private char[] pieceinfo;
   private Point now_point = new Point(0, 0);
@@ -85,7 +87,7 @@ public class PieceSet implements Piece {
     pieceinfo[Info.NOW_X.point] = (char)(p.x+0x30);
     pieceinfo[Info.NOW_Y.point] = (char)(p.y+0x30);
 
-    pieceinfo[Info.KILL.point] = (killpiece == null)?  '0' : killpiece.number.charAt(0);
+    pieceinfo[Info.KILL.point] = (killpiece != null)? killpiece.number.charAt(0): '0';
     return true;
   }
 
@@ -95,6 +97,9 @@ public class PieceSet implements Piece {
     now_point.y = parseInt(Info.NOW_Y);      
     return now_point;
   }
+  
+  @Override
+  public abstract Iterator<Point> movable();
   
   public String toString() {
       return String.valueOf(pieceinfo);  

@@ -1,5 +1,7 @@
 package com.exproject.janggi.interfacemod;
 
+import java.util.Iterator;
+
 import com.exproject.janggi.util.Point;
 
 // 장기말 정의 인터페이스
@@ -61,4 +63,6 @@ public interface Piece{
     public boolean move( Point move, ClassName killclass ); // 이동
     
     public Point getPosition(); // 현재위치
+    
+    public Iterator<Point> movable();
 }

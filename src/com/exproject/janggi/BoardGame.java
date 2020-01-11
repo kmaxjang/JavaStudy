@@ -74,7 +74,7 @@ public class BoardGame {
 
   public void marker2(Piece piece) {
     Point p;
-    Iterator<Point> i = bd.movable(piece);
+    Iterator<Point> i = piece.movable();
     while (i.hasNext()) {
       p = i.next();
       board[p.x][p.x] = movable_mark;
