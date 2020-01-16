@@ -1,45 +1,41 @@
 package com.game.worm;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Worm implements Schedule {
 
-	private int tail = 0;
-	private int head = 0;
+	private List<Point> worm = new ArrayList<>();	
+	private int worm_size;
+	private int score =0;
+	private Way way;
 
-	private Point[] body;
-
-	private Way way = Way.DOWN;
-	private boolean grow = false;
-
-public boolean isWork(){
-  return true;
-}
-
-public void runWork(){
-  drow();
-}
-
-	public Worm(int worm_max_size, Way move) {
-		body = new Point[worm_max_size];
+	public boolean isWork() {
+		return true;
 	}
 
-	private void setGrow(int food) {
+	public void runWork() {
+		way.move(way, worm.get(0));
+	}
+	
+	// 생성자
+	public Worm(Way way, Point start_point) {
+		this.way = way;
+		worm.add(start_point); // 머리
+		worm.add(way.wayBack().move(start_point)); // 꼬리
+		worm_size = worm.size();		
 	}
 
-	private int check(int length) {
-		length++;
-		return (length >= body.length) ? 0 : length;
+	public List<Point> getWorm() {
+		return worm;
 	}
 
-	public void drow() {
-		int p = head;
-		while (true) {
-			p--;
-			if (p == tail) {
-				break;
-			} else if (p <= 0) {
-				p = body.length - 1;
-			}
-		}
+	public boolean grow() {
+		worm_size++;
+		return false;
 	}
-
+	
+	public int getScore() {
+		return score;
+	}
 }
