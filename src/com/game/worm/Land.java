@@ -3,20 +3,17 @@ package com.game.worm;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 
 // 백그라운드
 public class Land implements Schedule {
 
-	// 마커정의
+	// enum 마커정의
 	public enum Mark {
-		WALL("W"),
-		SPACE(" "),
-		WORM_HEAD("H"),
-		WORM_BADY("B"),
-		WORM_TAIL("T"),
-		FRUTE("F");
+		WALL("W"), SPACE(" "), WORM_HEAD("H"), WORM_BADY("B"), WORM_TAIL(
+				"T"), FRUTE("F");
 
-		private String value;
+		private String value; // 마커 기본값
 
 		private Mark(String value) {
 			this.value = value;
@@ -25,29 +22,40 @@ public class Land implements Schedule {
 		public String getVelue() {
 			return value;
 		}
-	}
-	// 랜드크기
-	private int size_x = 30;
-	private int size_y = 25;
-	// 랜드맵
-	private Mark[][] mark_map = new Mark[size_x][size_y];
-	
+	} // mark end
+
+	// 맵 크기
+	private Map<Mark> map = new Map<Mark>(44, 26, Mark.SPACE);
+
+	// 게임 루프관리
 	private Scheduler sch = new Scheduler();
-	
+
 	// 생성자
 	public Land() {
-		setLand();
-		setfood();
 		sch.add(this);
 	}
 
+	// 게임시작
+	public void start() {
+		setLand();
+		setFood();
+		sch.run();
+	}
+
+	private boolean gameover = false;
+	
 	public boolean isWork() {
-		return true;
+		return !gameover;
 	}
 
 	public void runWork() {
+		setLand(); // 배경
+		map.setMark(food_point.x, food_point.y, Mark.FRUTE);
 		setWorms();
-		print();
+		print(map.getMap()); // 최종 결과물
+		if(worms.size() == 0)
+				gameover = true;
+		
 	}
 
 	// 랜덤 씨앗
@@ -55,80 +63,94 @@ public class Land implements Schedule {
 	private Point food_point = new Point();
 
 	// 랜덤 프드 뿌리기
-	public void setfood() {
-		while (true) {
-			food_point.x = seed.nextInt(size_x);
-			food_point.y = seed.nextInt(size_y);
-			if (getMark(food_point).equals(Mark.SPACE)) {
-				setMark(food_point, Mark.FRUTE);				
-				break;
+	public void setFood() {
+		int count =0;
+		while (count < map.SCREEN_SIZE_X*map.SCREEN_SIZE_Y) {
+			food_point.x = seed.nextInt(map.SCREEN_SIZE_X);
+			food_point.y = seed.nextInt(map.SCREEN_SIZE_Y);
+			if (map.getMark(food_point.x, food_point.y).equals(Mark.SPACE)) {				
+				return;
 			}
+			count++;
 		}
 	}
-	
-	// 배경설정
-	public void setMark(Point p, Mark mark) {
-		mark_map[p.x][p.y] = mark;
-	}
-	
-	// 배경가져오기
-	public Mark getMark(Point p) {
-		return mark_map[p.x][p.y];
-	}
-	
+
+	private StringBuffer sb = new StringBuffer(
+			map.SCREEN_SIZE_X * map.SCREEN_SIZE_Y);
+	// private Point tmp_point = new Point();
 	// 화면에 그리기
-	private StringBuffer sb = new StringBuffer(size_x * size_y);
-	private Point tmp_point = new Point();
-	public void print() {
-		sb.delete(0, sb.length()); // 초기화
-		for (int y = 0; y < size_y; y++) {
-			for (int x = 0; x < size_x; x++) {
-				tmp_point.set(x, y);
-				sb.append(getMark(tmp_point).getVelue());
+	public void print(Iterator<Mark> e) {
+		sb.delete(0, sb.length());
+		for (int y = 0; y < map.SCREEN_SIZE_Y; y++) {
+			for (int x = 0; x < map.SCREEN_SIZE_X; x++) {
+				sb.append(e.next().getVelue());
 			}
 			sb.append("\n");
 		}
-		for(Worm worm : worms) {
-			System.out.println("Worm score : " + worm.getScore());
-		}		
+		for (Worm worm : worms) {
+			System.out.println("Worm Score" + worm.getScore());
+		}
 		System.out.println(sb);
 	}
 
 	private List<Worm> worms = new ArrayList<>();
-
-	public boolean addWorm(Worm worm) {
-		worms.add(worm);
-		sch.add(worm);
-		return true;
-	}
-//
-	public void setWorms() {
-		for (Worm worm : worms) {
-			List<Point> w = worm.getWorm();
-			int length = w.size();
-			setMark(w.get(0), Mark.WORM_HEAD);
-			for(int c =1; c < length-2; c++) {
-				setMark(w.get(length - 1), Mark.WORM_BADY);
-			}
-			setMark(w.get(length - 1), Mark.WORM_TAIL);
+	private Way[] way = Way.values();
+	// 웜 등록
+	public boolean addWorm() {
+		Point np = new Point();
+		np.x = seed.nextInt(map.SCREEN_SIZE_X/2)+10;
+		np.y = seed.nextInt(map.SCREEN_SIZE_Y/2)+10;		
+		Worm worm = new Worm(way[seed.nextInt(way.length-1)],np);
+		if (worms.add(worm)) {
+			sch.add(worm);			
+			return true;
 		}
+		return false;
 	}
 	
-	// 배경초기화
+	// 웜들 맵에 기록
+	public void setWorms() {
+		for (Iterator<Worm> wormlist = worms.iterator() ; wormlist.hasNext() ; ) {
+			Worm worm = wormlist.next();
+			Iterator<Point> w = worm.getWorm();
+			Point tp = w.next();
+			switch (map.getMark(tp.x, tp.y)) {
+				case WALL : // game over
+				case WORM_HEAD :
+				case WORM_BADY :
+				case WORM_TAIL :
+					worm.death(); //
+					wormlist.remove();
+					break;
+				case FRUTE :
+					worm.grow();
+					setFood();
+				case SPACE :
+					map.setMark(tp.x, tp.y, Mark.WORM_HEAD);
+					while (true) {
+						tp = w.next();
+						if (w.hasNext()) {
+							map.setMark(tp.x, tp.y, Mark.WORM_BADY);
+						} else {
+							map.setMark(tp.x, tp.y, Mark.WORM_TAIL);
+							break;
+						}
+					} // while end
+			} // switch end
+		} // for end
+	}
+
+	// 배경 기록
 	private void setLand() {
-		for (int x = 0; x < size_x; x++) {
-			for (int y = 0; y < size_y; y++) {
-				tmp_point.set(x, y);
-				if (x == 0 || x == size_x - 1 || y == 0 || y == size_y - 1) {
-					setMark(tmp_point, Mark.WALL);
+		for (int x = 0; x < map.SCREEN_SIZE_X; x++) {
+			for (int y = 0; y < map.SCREEN_SIZE_Y; y++) {
+				if (x == 0 || x == map.SCREEN_SIZE_X - 1 || y == 0
+						|| y == map.SCREEN_SIZE_Y - 1) {
+					map.setMark(x, y, Mark.WALL);
 				} else {
-					setMark(tmp_point, Mark.SPACE);
+					map.setMark(x, y, Mark.SPACE);
 				}
 			}
 		}
-	}
-	
-	public void start() {
-		sch.run();
 	}
 }

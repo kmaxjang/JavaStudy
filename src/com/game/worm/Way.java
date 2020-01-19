@@ -22,7 +22,7 @@ public enum Way {
     mp.move(move);
     return mp;
   }
-
+  // 역방향
   public Way wayBack() {
     switch (this) {
       case UP:
@@ -33,11 +33,10 @@ public enum Way {
         return RIGHT;
       case RIGHT:
         return LIFTE;
-      default:
-        return null;
     }
+    return null;
   }
-
+// up
   public Way vector(Point a, Point b) {
     if (a.x == b.x) {
       return (a.y < b.y) ? Way.DOWN : Way.UP;
