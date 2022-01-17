@@ -80,7 +80,7 @@ public class Displays{
     
     private String getPiece( Piece piece ){
 	if(piece != null){
-	    switch(piece.getTeam()){
+	    switch(piece.getGroup()){
 		case HAN :
 		    switch(piece.getClassName()){
 			case KING :

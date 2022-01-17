@@ -17,7 +17,7 @@ public class King extends PieceSet{
     public King( Board board, int piece ) {
 	super(piece);
 	this.board = board;
-	castle = (getTeam() == Team.HAN) ? board.castleup : board.castledown;
+	castle = (getGroup() == Group.HAN) ? board.castleup : board.castledown;
     }
     
     public Iterator<Point> movable(){

@@ -28,7 +28,7 @@ public class Point {
     }
     
     public Point get(){
-	return this;
+	return new Point(x, y);
     }    
     
     public boolean equals( Point p ){
@@ -38,4 +38,8 @@ public class Point {
     public boolean equals( int x, int y ){
 	return(this.x == x && this.y == y);
     }
+    
+    public String toString() {
+		return " " + x + y;
+	}
 }

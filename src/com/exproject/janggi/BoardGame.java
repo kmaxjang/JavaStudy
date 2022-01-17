@@ -5,7 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import com.exproject.janggi.interfacemod.Piece;
-import com.exproject.janggi.interfacemod.Piece.Team;
+import com.exproject.janggi.interfacemod.Piece.Group;
 import com.exproject.janggi.util.Point;
 
 public class BoardGame {
@@ -42,7 +42,7 @@ public class BoardGame {
     }
     
     piece = bd.getPiece(p);
-    if (piece != null && piece.getTeam() == Team.CHO) {
+    if (piece != null && piece.getGroup() == Group.CHO) {
       display(piece);
       choice = true;
     }

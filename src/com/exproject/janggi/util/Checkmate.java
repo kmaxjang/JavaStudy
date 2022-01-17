@@ -2,7 +2,7 @@ package com.exproject.janggi.util;
 
 import com.exproject.janggi.Board;
 import com.exproject.janggi.interfacemod.Piece;
-import com.exproject.janggi.interfacemod.Piece.ClassName;
+import com.exproject.janggi.interfacemod.Piece.PieceName;
 import com.exproject.janggi.util.Move;
 import com.exproject.janggi.util.Point;
 import com.exproject.janggi.util.Points;
@@ -18,7 +18,7 @@ public class Checkmate {
 	m.move();
 	while( m.scope() ){
 	    tmp_piece = board.getPiece(Move.point);
-	    if( tmp_piece != null && !king.equalsTeam(tmp_piece) && tmp_piece.getClassName() == ClassName.CHA ){
+	    if( tmp_piece != null && !king.equalsTeam(tmp_piece) && tmp_piece.getClassName() == PieceName.CHA ){
 		return true;
 	    }
 	}

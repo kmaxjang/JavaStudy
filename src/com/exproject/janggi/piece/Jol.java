@@ -18,7 +18,7 @@ public class Jol extends PieceSet{
     public Jol( Board board, int piece ) {
 	super(piece);
 	this.board = board;
-	castle = (getTeam() == Piece.Team.HAN);
+	castle = (getGroup() == Piece.Group.HAN);
     }
     
     public Iterator<Point> movable(){

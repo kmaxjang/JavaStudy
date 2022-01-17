@@ -21,46 +21,46 @@ public abstract class PieceSet implements Piece {
 
   @Override
   public boolean equalsTeam(Piece piece) {
-    return getTeam().equals(piece.getTeam());
+    return getGroup().equals(piece.getGroup());
   }
 
   @Override
-  public Team getTeam() {
+  public Group getGroup() {
     switch (pieceinfo[Info.TEAM.point]) {
       case '1':
-        return Team.HAN;
+        return Group.HAN;
       case '2':
-        return Team.CHO;
+        return Group.CHO;
     }
     return null;
   }
 
   @Override
-  public ClassName getClassName() {
+  public PieceName getClassName() {
       return getClassName(Info.CLASS);
   }
   
   @Override
-  public ClassName getKillClass(){      
+  public PieceName getKillClass(){      
       return getClassName(Info.KILL);
   }
   
-  private ClassName getClassName(Info info) {
+  private PieceName getClassName(Info info) {
       switch (pieceinfo[info.point]) {
 	      case '7':
-	        return ClassName.CHA;
+	        return PieceName.CHA;
 	      case '6':
-	        return ClassName.POO;
+	        return PieceName.POO;
 	      case '5':
-	        return ClassName.MA;
+	        return PieceName.MA;
 	      case '4':
-	        return ClassName.SAG;
+	        return PieceName.SAG;
 	      case '3':
-	        return ClassName.SA;
+	        return PieceName.SA;
 	      case '2':
-	        return ClassName.JOL;
+	        return PieceName.JOL;
 	      case '1':
-	        return ClassName.KING;
+	        return PieceName.KING;
 	    }
 	    return null;
   }
@@ -81,7 +81,7 @@ public abstract class PieceSet implements Piece {
   }
 
   @Override
-  public boolean move(Point p, ClassName killpiece) {
+  public boolean move(Point p, PieceName killpiece) {
     pieceinfo[Info.OLD_X.point] = pieceinfo[Info.NOW_X.point];
     pieceinfo[Info.OLD_Y.point] = pieceinfo[Info.NOW_Y.point];
     pieceinfo[Info.NOW_X.point] = (char)(p.x+0x30);

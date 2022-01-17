@@ -50,7 +50,7 @@ public class Poo extends PieceSet{
     private void castleWay( Move m ){
 	m.move();
 	tmp_piece = board.getPiece(Move.point);
-	if(tmp_piece != null && !tmp_piece.getClassName().equals(Piece.ClassName.POO)){
+	if(tmp_piece != null && !tmp_piece.getClassName().equals(Piece.PieceName.POO)){
 	    m.move();
 	    moveChack(Move.point);
 	}
@@ -61,7 +61,7 @@ public class Poo extends PieceSet{
 	while(m.scope()){
 	    tmp_piece = board.getPiece(Move.point);
 	    if(tmp_piece != null){
-		if(!tmp_piece.getClassName().equals(Piece.ClassName.POO)){
+		if(!tmp_piece.getClassName().equals(Piece.PieceName.POO)){
 		    m.move();
 		    while(m.scope() && moveChack(Move.point)){
 			m.move();
@@ -80,7 +80,7 @@ public class Poo extends PieceSet{
 	    points.add(p);
 	    return true;
 	}
-	if(!tmp_piece.getClassName().equals(Piece.ClassName.POO) && !tmp_piece.equalsTeam(poo)){
+	if(!tmp_piece.getClassName().equals(Piece.PieceName.POO) && !tmp_piece.equalsTeam(poo)){
 	    points.add(p);
 	}
 	return false;
