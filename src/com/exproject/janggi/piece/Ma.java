@@ -3,81 +3,96 @@ package com.exproject.janggi.piece;
 import java.util.Iterator;
 
 import com.exproject.janggi.Board;
-import com.exproject.janggi.interfacemod.Piece;
+import com.exproject.janggi.interfacemod.PieceSet;
 import com.exproject.janggi.util.Move;
+import com.exproject.janggi.util.PieceBuild;
 import com.exproject.janggi.util.Point;
 import com.exproject.janggi.util.Points;
 
-public class Ma extends PieceSet{
-    
-    private Board board;
-    private Points points = new Points(8);
-    private Piece tmp_piece;
-    private Point tmp_point = new Point();
-    
-    public Ma( Board board, int piece ) {
-	super(piece);
-	this.board = board;
-    }
-    
-    public void maWay( Move m ){
-	m.move();
-	if(m.scope()){
-	    moveChack(Move.point);
+public class Ma extends Piece {
+
+	private Board board;
+	private Points points = new Points(8);
+	private Point point = new Point();
+	private Point oldpoint = new Point();
+	private Name killname = null;
+	private PieceSet tmp_piece;
+
+	Move[] way_all = {
+	    Move.UP,
+	    Move.RIGHTUP,
+	    Move.RIGHT,
+	    Move.RIGHTDOWN,
+	    Move.DOWN,
+	    Move.LEFTDOWN,
+	    Move.LEFT,
+	    Move.LEFTUP
+	};
+
+	public Ma(Board board, PieceBuild piece) {
+		super(piece.getGroup(), piece.getName());
+		point.set(piece.getPosition());
+		oldpoint.set(piece.getOldPosition());
+		killname = piece.getKillName();
+		this.board = board;
 	}
-    }
-    
-    /*
-     * null = 기록 다른편일땄1�7 = 기록 장군을1�7 아닐땄1�7= 기록
-     */
-    public Iterator<Point> movable(){
-	points.clear();
-	
-	Move.point.set(getPosition());
-	Move.UP.move();
-	if(Move.UP.scope() && board.getPiece(Move.point) == null){
-	    tmp_point.set(Move.point);
-	    maWay(Move.LEFTEUP);
-	    Move.point.set(tmp_point);
-	    maWay(Move.RIGHTUP);
+
+	/*
+	 * null = 기록 다른편일땄1�7 = 기록 장군을1�7 아닐땄1�7= 기록
+	 */
+	private void movable() {
+		points.clear();
+
+		for (int w = 0; w < way_all.length; w += 2) {
+			Move.point.set(getPosition());
+			way_all[w].move();
+			if (way_all[w].scope() && board.getPiece(Move.point) == null) {
+				way_all[w + 1].move();
+				if (way_all[w + 1].scope()) {
+					moveChack(Move.point);
+				}
+				way_all[(w + 6) % 8].move(2);
+				if (way_all[(w + 6) % 8].scope()) {
+					moveChack(Move.point);
+				}
+			}
+		}
 	}
-	Move.point.set(getPosition());
-	Move.DOWN.move();
-	if(Move.DOWN.scope() && board.getPiece(Move.point) == null){
-	    tmp_point.set(Move.point);
-	    maWay(Move.LEFTEDOWN);
-	    Move.point.set(tmp_point);
-	    maWay(Move.RIGHTDOWN);
+
+	private boolean moveChack(Point p) {
+		tmp_piece = board.getPiece(p);
+		if (tmp_piece == null) {
+			points.add(p);
+			return true;
+		}
+		if (!getGroup().equals(tmp_piece.getGroup())) {
+			points.add(p);
+		}
+		return false;
 	}
-	Move.point.set(getPosition());
-	Move.LEFTE.move();
-	if(Move.LEFTE.scope() && board.getPiece(Move.point) == null){
-	    tmp_point.set(Move.point);
-	    maWay(Move.LEFTEUP);
-	    Move.point.set(tmp_point);
-	    maWay(Move.LEFTEDOWN);
+
+	@Override
+	public Point getPosition() {
+		return point;
 	}
-	
-	Move.point.set(getPosition());
-	Move.RIGHT.move();
-	if(Move.RIGHT.scope() && board.getPiece(Move.point) == null){
-	    tmp_point.set(Move.point);
-	    maWay(Move.RIGHTUP);
-	    Move.point.set(tmp_point);
-	    maWay(Move.RIGHTDOWN);
+
+	@Override
+	public Point getOldPosition() {
+		return oldpoint;
 	}
-	return points.getMovable();
-    }
-    
-    private boolean moveChack( Point p ){
-	tmp_piece = board.getPiece(p);
-	if(tmp_piece == null){
-	    points.add(p);
-	    return true;
+
+	@Override
+	public Name getKillPiece() {
+		return killname;
 	}
-	if(!equalsTeam(tmp_piece)){
-	    points.add(p);
+
+	@Override
+	public Iterator<Point> getMovable() {
+		return null;
 	}
-	return false;
-    }
+
+	@Override
+	public boolean move(Point movepoint) {
+		return false;
+	}
 }

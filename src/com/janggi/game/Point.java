@@ -15,14 +15,6 @@ public final class Point {
 		this.y = y;
 	}
 
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
 	public Point set(Point p) {
 		x = p.x;
 		y = p.y;
@@ -34,6 +26,14 @@ public final class Point {
 		this.y = y;
 		return this;
 	}
+	
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}	
 
 	public Point move(Point p) {
 		x += p.x;

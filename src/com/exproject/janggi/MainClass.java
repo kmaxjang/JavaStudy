@@ -1,0 +1,35 @@
+package com.exproject.janggi;
+
+import com.exproject.janggi.util.Move;
+import com.exproject.janggi.util.PieceBuild;
+import com.exproject.janggi.util.Point;
+
+public class MainClass {
+
+	public static void msg(String msg) {
+		System.out.println(msg);
+	}
+
+	public static void main(String[] args) {
+		msg("Janggi king");
+		Point point = new Point();
+		point.set("09");
+		msg(point.toString());
+
+		PieceBuild pb = new PieceBuild();
+		pb.set("1732127");
+		msg("1732127");
+		msg(pb.getGroup().name());
+		msg(pb.getName().name());
+		msg(pb.getPosition().toString());
+		msg(pb.getOldPosition().toString());
+		msg(pb.getKillName().name());
+
+		Move[] way = Move.values();
+		msg(way[0].point.toString());
+		for (Move m : way) {
+			msg(m.name());
+		}
+
+	}
+}

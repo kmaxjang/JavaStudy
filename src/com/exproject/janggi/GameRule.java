@@ -1,6 +1,6 @@
 package com.exproject.janggi;
 
-import com.exproject.janggi.interfacemod.Piece;
+import com.exproject.janggi.interfacemod.PieceSet;
 import com.exproject.janggi.util.Point;
 
 /* 장기번호
@@ -70,7 +70,7 @@ public class GameRule {
 	
     }
     
-    public int getPiece( Piece piece ){
+    public int getPiece( PieceSet piece ){
 	return piece.info();
     }
     

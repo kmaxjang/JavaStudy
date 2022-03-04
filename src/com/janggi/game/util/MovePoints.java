@@ -46,11 +46,12 @@ public class MovePoints {
 	public Iterator<Point> getIterate() {
 		return new Iterator<Point>(){
 			
+			private int count = limet;
 			private Point[] iter;
 			{
 				System.arraycopy(list, 0, iter, 0, limet);
 			}
-			private int count = limet;
+			
 
 			@Override
 			public boolean hasNext() {				

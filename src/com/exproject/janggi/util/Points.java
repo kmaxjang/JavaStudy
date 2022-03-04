@@ -15,15 +15,10 @@ public class Points {
 			capacity = 21;
 		}
 		list = new Point[capacity];
-/*
-		for (int i = 0; i < points.length; i++) {
-			points[i] = new Point();
-		}
-*/
 	}
 
 	public int limet() {
-		return limet-1;
+		return limet;
 	}
 
 	public boolean add(Point p) {
@@ -43,13 +38,23 @@ public class Points {
 		}
 		return false;
 	}
+	
+	public boolean comper(Point p) {
+		for(int i = 0; i < limet; i++) {
+			if(list[i].equals(p)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public Iterator<Point> getMovable() {
 		return new Iterator<Point>() {
-			private int count = limet;
+			
+			private int count = limet;			
 			private Point[] iter;
 			{
-				System.arraycopy(list, 0, iter, 0, limet);
+				System.arraycopy(list, 0, iter, 0, count);
 			}
 			
 			@Override
@@ -67,5 +72,9 @@ public class Points {
 
 	public void clear() {
 		limet = 0;
+	}
+	
+	public String toString() {
+		return "Length :"+list.length+" limet :"+ limet;
 	}
 }
