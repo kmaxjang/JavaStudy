@@ -61,7 +61,8 @@ public class Poo extends Piece {
 	private void castleWay(Move m) {
 		m.move();
 		tmp_piece = board.getPiece(Move.point);
-		if (tmp_piece != null && !tmp_piece.equals(PieceSet.Name.POO)) {
+		Name poo = PieceSet.Name.POO;
+		if (tmp_piece != null && !tmp_piece.equals(poo)) {
 			m.move();
 			moveChack(Move.point);
 		}
@@ -73,7 +74,8 @@ public class Poo extends Piece {
 			points.add(p);
 			return true;
 		}
-		if (!tmp_piece.equals(PieceSet.Name.POO) && !tmp_piece.equals(getGroup())) {
+		Name poo = PieceSet.Name.POO;
+		if (!tmp_piece.equals(poo) && !tmp_piece.equals(getGroup())) {
 			points.add(p);
 		}
 		return false;
