@@ -3,89 +3,128 @@ package com.exproject.janggi.piece;
 import java.util.Iterator;
 
 import com.exproject.janggi.Board;
-import com.exproject.janggi.interfacemod.PieceSet;
+import com.exproject.janggi.interfacemod.Piece;
+import com.exproject.janggi.interfacemod.PieceMove;
 import com.exproject.janggi.util.Move;
-import com.exproject.janggi.util.PieceBuild;
 import com.exproject.janggi.util.Point;
 import com.exproject.janggi.util.Points;
 
-public class Sag extends Piece {
+public class Sag implements PieceMove {
 
 	private Board board;
 	private Points points = new Points(8);
-	private Point point = new Point();
-	private Point oldpoint = new Point();
-	private Name killname = null;
-	private PieceSet tmp_piece;
+	private Piece tmp_piece;
 
-	public Sag(Board board, PieceBuild piece) {
-		super(piece.getGroup(), piece.getName());
-		point.set(piece.getPosition());
-		oldpoint.set(piece.getOldPosition());
-		killname = piece.getKillName();
-		this.board = board;
+	public Sag() {
+
 	}
 
-	private void movable() {
+	/*
+	 * null = 기록 다른편일땄1�7 = 기록 장군을1�7 아닐땄1�7= 기록
+	 */
+	public Iterator<Point> movable(Board b, Piece sag) {
+		this.board = b;
 		points.clear();
-		for (int w = 0; w < way.length; w += 2) {
-			Move.point.set(getPosition());
-			way[w].move();
-			if (way[w].scope() && board.getPiece(Move.point) == null) {
-
-				way[w + 1].move();
-				if (way[w + 1].scope() && board.getPiece(Move.point) == null) {
-					way[w + 1].move();
-					if (way[w + 1].scope()) {
-						moveChack(Move.point);
-					}
+		Move.point.set(sag.getPosition());
+		Move.UP.move();
+		Move.UP.move();
+		Move.UP.move();
+		if (Move.point.getY() >= board.MIN_Y) {
+			Move.DOWN.move();
+			Move.DOWN.move();
+			if (board.getPiece(Move.point) == null) {
+				Move.LEFTUP.move();
+				if (Move.point.getX() > board.MIN_X && board.getPiece(Move.point) == null) {
+					Move.LEFTUP.move();
+					moveChack(sag, Move.point);
+					Move.RIGHTDOWN.move();
 				}
-				way[(w + 6) % 8].move(2);
-				way[(w + 5) % 8].move();
-				if (way[(w + 5) % 8].scope() && board.getPiece(Move.point) == null) {
-					way[(w + 7) % 8].move();
-					if (way[(w + 7) % 8].scope()) {
-						moveChack(Move.point);
-					}
+				Move.RIGHT.move();
+				Move.RIGHT.move();
+				if (Move.point.getX() < board.MAX_X - 1 && board.getPiece(Move.point) == null) {
+					Move.RIGHTUP.move();
+					moveChack(sag, Move.point);
 				}
 			}
 		}
+		Move.point.set(sag.getPosition());
+		Move.DOWN.move();
+		Move.DOWN.move();
+		Move.DOWN.move();
+		if (Move.point.getY() < board.MAX_Y) {
+			Move.UP.move();
+			Move.UP.move();
+			if (board.getPiece(Move.point) == null) {
+				Move.LEFTDOWN.move();
+				if (Move.point.getX() > board.MIN_X && board.getPiece(Move.point) == null) {
+					Move.LEFTDOWN.move();
+					moveChack(sag, Move.point);
+					Move.RIGHTUP.move();
+				}
+				Move.RIGHT.move();
+				Move.RIGHT.move();
+				if (Move.point.getX() < board.MAX_X - 1 && board.getPiece(Move.point) == null) {
+					Move.RIGHTDOWN.move();
+					moveChack(sag, Move.point);
+				}
+			}
+		}
+		Move.point.set(sag.getPosition());
+		Move.LEFT.move();
+		Move.LEFT.move();
+		Move.LEFT.move();
+		if (Move.point.getX() >= board.MIN_X) {
+			Move.RIGHT.move();
+			Move.RIGHT.move();
+			if (board.getPiece(Move.point) == null) {
+				Move.LEFTUP.move();
+				if (Move.point.getY() > board.MIN_Y && board.getPiece(Move.point) == null) {
+					Move.LEFTUP.move();
+					moveChack(sag, Move.point);
+					Move.RIGHTDOWN.move();
+				}
+				Move.DOWN.move();
+				Move.DOWN.move();
+				if (Move.point.getY() < board.MAX_Y - 1 && board.getPiece(Move.point) == null) {
+					Move.LEFTDOWN.move();
+					moveChack(sag, Move.point);
+				}
+			}
+		}
+		Move.point.set(sag.getPosition());
+		Move.RIGHT.move();
+		Move.RIGHT.move();
+		Move.RIGHT.move();
+		if (Move.point.getX() < board.MAX_X) {
+			Move.LEFT.move();
+			Move.LEFT.move();
+			if (board.getPiece(Move.point) == null) {
+				Move.RIGHTUP.move();
+				if (Move.point.getY() > board.MIN_Y && board.getPiece(Move.point) == null) {
+					Move.RIGHTUP.move();
+					moveChack(sag, Move.point);
+					Move.LEFTDOWN.move();
+				}
+				Move.DOWN.move();
+				Move.DOWN.move();
+				if (Move.point.getY() < board.MAX_Y - 1 && board.getPiece(Move.point) == null) {
+					Move.RIGHTDOWN.move();
+					moveChack(sag, Move.point);
+				}
+			}
+		}
+		return points.getMovable();
 	}
 
-	private boolean moveChack(Point p) {
+	private boolean moveChack(Piece sag, Point p) {
 		tmp_piece = board.getPiece(p);
 		if (tmp_piece == null) {
 			points.add(p);
 			return true;
 		}
-		if (!tmp_piece.equals(getGroup())) {
+		if (sag.isTeam(tmp_piece)) {
 			points.add(p);
 		}
-		return false;
-	}
-
-	@Override
-	public Point getPosition() {
-		return point;
-	}
-
-	@Override
-	public Point getOldPosition() {
-		return oldpoint;
-	}
-
-	@Override
-	public Name getKillPiece() {
-		return killname;
-	}
-
-	@Override
-	public Iterator<Point> getMovable() {
-		return null;
-	}
-
-	@Override
-	public boolean move(Point movepoint) {
 		return false;
 	}
 }

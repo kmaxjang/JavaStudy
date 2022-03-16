@@ -3,106 +3,136 @@ package com.exproject.janggi.piece;
 import java.util.Iterator;
 
 import com.exproject.janggi.Board;
-import com.exproject.janggi.interfacemod.PieceSet;
+import com.exproject.janggi.interfacemod.Piece;
+import com.exproject.janggi.interfacemod.PieceMove;
 import com.exproject.janggi.util.Move;
-import com.exproject.janggi.util.PieceBuild;
 import com.exproject.janggi.util.Point;
 import com.exproject.janggi.util.Points;
 
-public class Poo extends Piece {
-
+public class Poo implements PieceMove {
 	private Board board;
-	private Points points = new Points(14);
-	private Point point = new Point();
-	private Point oldpoint = new Point();
-	private Name killname = null;
-	private PieceSet tmp_piece;
+	private Points points = new Points(21);
+	private Piece tmp_piece;
 
-	public Poo(Board board, PieceBuild piece) {
-		super(piece.getGroup(), piece.getName());
-		point.set(piece.getPosition());
-		oldpoint.set(piece.getOldPosition());
-		killname = piece.getKillName();
-		this.board = board;
+	public Poo() {
+
 	}
 
-	private void movable() {
+	/*
+	 * null = 기록 다른편일땄1�7 = 기록 장군을1�7 아닐땄1�7= 기록
+	 */
+	public Iterator<Point> movable(Board b, Piece poo) {
+		this.board = b;
 		points.clear();
-
-		for (int w = 0; w < way.length; w += 2) {
-			Move.point.set(getPosition());
-			way[w].move();
-			while (way[w].scope()) {
-				tmp_piece = board.getPiece(Move.point);
-				if (tmp_piece != null) {
-					if (!tmp_piece.equals(PieceSet.Name.POO)) {
-						way[w].move();
-						while (way[w].scope() && moveChack(Move.point)) {
-							way[w].move();
-						}
+		Move.point.set(poo.getPosition());
+		Move.UP.move();
+		while (Move.point.getY() > 0) {
+			tmp_piece = board.getPiece(Move.point);
+			if (tmp_piece != null) {
+				if (!tmp_piece.getClassName().equals(poo.getClassName())) {
+					Move.UP.move();
+					while (Move.point.getY() > board.MIN_Y && moveChack(poo, Move.point)) {
+						Move.UP.move();
 					}
-					break;
 				}
-				way[w].move();
+				break;
+			} else {
+				Move.UP.move();
 			}
 		}
-		Move.point.set(getPosition());
-		if (Move.point.equals(board.castleup[1]) || Move.point.equals(board.castledown[1])) {
-			castleWay(Move.LEFTDOWN);
-		} else if (Move.point.equals(board.castleup[3]) || Move.point.equals(board.castledown[3])) {
-			castleWay(Move.LEFTUP);
-		} else if (Move.point.equals(board.castleup[5]) || Move.point.equals(board.castledown[5])) {
-			castleWay(Move.RIGHTUP);
-		} else if (Move.point.equals(board.castleup[7]) || Move.point.equals(board.castledown[7])) {
-			castleWay(Move.RIGHTDOWN);
+		Move.point.set(poo.getPosition());
+		Move.DOWN.move();
+		while (Move.point.getY() < board.MAX_Y - 1) {
+			tmp_piece = board.getPiece(Move.point);
+			if (tmp_piece != null) {
+				if (!tmp_piece.getClassName().equals(poo.getClassName())) {
+					Move.DOWN.move();
+					while (Move.point.getY() < board.MAX_Y && moveChack(poo, Move.point)) {
+						Move.DOWN.move();
+					}
+				}
+				break;
+			} else {
+				Move.DOWN.move();
+			}
 		}
+		Move.point.set(poo.getPosition());
+		Move.LEFT.move();
+		while (Move.point.getX() > 0) {
+			tmp_piece = board.getPiece(Move.point);
+			if (tmp_piece != null) {
+				if (!tmp_piece.getClassName().equals(poo.getClassName())) {
+					Move.LEFT.move();
+					while (Move.point.getX() >= board.MIN_X && moveChack(poo, Move.point)) {
+						Move.LEFT.move();
+					}
+				}
+				break;
+			} else {
+				Move.LEFT.move();
+			}
+		}
+		Move.point.set(poo.getPosition());
+		Move.RIGHT.move();
+		while (Move.point.getX() < board.MAX_X - 1) {
+			tmp_piece = board.getPiece(Move.point);
+			if (tmp_piece != null) {
+				if (!tmp_piece.getClassName().equals(poo.getClassName())) {
+					Move.RIGHT.move();
+					while (Move.point.getX() < board.MAX_X && moveChack(poo, Move.point)) {
+						Move.RIGHT.move();
+					}
+				}
+				break;
+			} else {
+				Move.RIGHT.move();
+			}
+		}
+		if (poo.getPosition().equals(board.castleup[0]) || poo.getPosition().equals(board.castledown[0])) {
+			Move.point.set(poo.getPosition());
+			Move.RIGHTDOWN.move();
+			tmp_piece = board.getPiece(Move.point);
+			if (tmp_piece != null && !tmp_piece.getClassName().equals(poo.getClassName())) {
+				Move.RIGHTDOWN.move();
+				moveChack(poo, Move.point);
+			}
+		} else if (poo.getPosition().equals(board.castleup[2]) || poo.getPosition().equals(board.castledown[2])) {
+			Move.point.set(poo.getPosition());
+			Move.LEFTDOWN.move();
+			tmp_piece = board.getPiece(Move.point);
+			if (tmp_piece != null && !tmp_piece.getClassName().equals(poo.getClassName())) {
+				Move.LEFTDOWN.move();
+				moveChack(poo, Move.point);
+			}
+		} else if (poo.getPosition().equals(board.castleup[6]) || poo.getPosition().equals(board.castledown[6])) {
+			Move.point.set(poo.getPosition());
+			Move.RIGHTUP.move();
+			tmp_piece = board.getPiece(Move.point);
+			if (tmp_piece != null && !tmp_piece.getClassName().equals(poo.getClassName())) {
+				Move.RIGHTUP.move();
+				moveChack(poo, Move.point);
+			}
+		} else if (poo.getPosition().equals(board.castleup[8]) || poo.getPosition().equals(board.castledown[8])) {
+			Move.point.set(poo.getPosition());
+			Move.LEFTUP.move();
+			tmp_piece = board.getPiece(Move.point);
+			if (tmp_piece != null && !tmp_piece.getClassName().equals(poo.getClassName())) {
+				Move.LEFTUP.move();
+				moveChack(poo, Move.point);
+			}
+		}
+		return points.getMovable();
 	}
 
-	private void castleWay(Move m) {
-		m.move();
-		tmp_piece = board.getPiece(Move.point);
-		Name poo = PieceSet.Name.POO;
-		if (tmp_piece != null && !tmp_piece.equals(poo)) {
-			m.move();
-			moveChack(Move.point);
-		}
-	}
-
-	private boolean moveChack(Point p) {
+	private boolean moveChack(Piece poo, Point p) {
 		tmp_piece = board.getPiece(p);
 		if (tmp_piece == null) {
 			points.add(p);
 			return true;
 		}
-		Name poo = PieceSet.Name.POO;
-		if (!tmp_piece.equals(poo) && !tmp_piece.equals(getGroup())) {
+		if (poo.isTeam(tmp_piece) && !tmp_piece.getClassName().equals(poo.getClassName())) {
 			points.add(p);
 		}
-		return false;
-	}
-
-	@Override
-	public Point getPosition() {
-		return point;
-	}
-
-	@Override
-	public Point getOldPosition() {
-		return oldpoint;
-	}
-
-	@Override
-	public Name getKillPiece() {
-		return killname;
-	}
-
-	@Override
-	public Iterator<Point> getMovable() {
-		return null;
-	}
-
-	@Override
-	public boolean move(Point movepoint) {
 		return false;
 	}
 }

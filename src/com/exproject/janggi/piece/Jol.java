@@ -3,118 +3,101 @@ package com.exproject.janggi.piece;
 import java.util.Iterator;
 
 import com.exproject.janggi.Board;
-import com.exproject.janggi.interfacemod.PieceSet;
+import com.exproject.janggi.interfacemod.Piece;
+import com.exproject.janggi.interfacemod.Piece.Team;
+import com.exproject.janggi.interfacemod.PieceMove;
 import com.exproject.janggi.util.Move;
-import com.exproject.janggi.util.PieceBuild;
 import com.exproject.janggi.util.Point;
 import com.exproject.janggi.util.Points;
 
-public class Jol extends Piece {
+public class Jol implements PieceMove {
 
 	private Board board;
 	private Points points = new Points(5);
-	private Point point = new Point();
-	private Point oldpoint = new Point();
-	private Name killname = null;
-	private PieceSet tmp_piece;
-	private boolean castle;
+	private Piece tmp_piece;
+	private Point[] castle;
 
-	public Jol(Board board, PieceBuild piece) {
-		super(piece.getGroup(), piece.getName());
-		point.set(piece.getPosition());
-		oldpoint.set(piece.getOldPosition());
-		killname = piece.getKillName();
-		this.board = board;
-		castle = (getGroup() == PieceSet.Group.HAN);
+	public Jol() {
 	}
 
-	private void movable() {
+	/*
+	 * null = 기록 다른편일땄1�7 = 기록 장군을1�7 아닐땄1�7= 기록
+	 */
+	public Iterator<Point> movable(Board b, Piece jol) {
+		this.board = b;
+		castle = (jol.getTeamName() == Team.HAN) ? board.castleup : board.castledown;
 		points.clear();
-
-		Move.point.set(getPosition());
+		Move.point.set(jol.getPosition());
+		Move.LEFT.move();
+		if (Move.point.getX() >= board.MIN_X)
+			moveChack(jol, Move.point);
+		Move.point.set(jol.getPosition());
 		Move.RIGHT.move();
-		if (Move.RIGHT.scope()) {
-			moveChack(Move.point);
-		}
-		Move.LEFT.move(2);
-		if (Move.LEFT.scope()) {
-			moveChack(Move.point);
-		}
+		if (Move.point.getX() < board.MAX_X)
+			moveChack(jol, Move.point);
 
-		Move.point.set(getPosition());
-		if (castle) {
+		if (jol.getTeamName() == Team.HAN) {
+			Move.point.set(jol.getPosition());
 			Move.DOWN.move();
-			if (Move.DOWN.scope()) {
-				moveChack(Move.point);
-			}
-			Move.point.set(getPosition());
-			if (Move.point.equals(board.castledown[6])) {
+			if (Move.point.getY() < board.MAX_Y)
+				moveChack(jol, Move.point);
+
+			if (jol.getPosition().equals(castle[0])) {
+				Move.point.set(jol.getPosition());
 				Move.RIGHTDOWN.move();
-				moveChack(Move.point);
-			} else if (Move.point.equals(board.castledown[1])) {
+				moveChack(jol, Move.point);
+			} else if (jol.getPosition().equals(castle[2])) {
+				Move.point.set(jol.getPosition());
 				Move.LEFTDOWN.move();
-				moveChack(Move.point);
-			} else if (Move.point.equals(board.castledown[8])) {
+				moveChack(jol, Move.point);
+			} else if (jol.getPosition().equals(castle[4])) {
+				Move.point.set(jol.getPosition());
+				Move.LEFTDOWN.move();
+				moveChack(jol, Move.point);
+				Move.point.set(jol.getPosition());
 				Move.RIGHTDOWN.move();
-				moveChack(Move.point);
-				Move.LEFT.move(2);
-				moveChack(Move.point);
+				moveChack(jol, Move.point);
 			}
 		} else {
+			Move.point.set(jol.getPosition());
 			Move.UP.move();
-			if (Move.UP.scope()) {
-				moveChack(Move.point);
-			}
-			Move.point.set(getPosition());
-			if (Move.point.equals(board.castleup[3])) {
+			if (Move.point.getY() >= board.MIN_Y)
+				moveChack(jol, Move.point);
+
+			if (jol.getPosition().equals(castle[6])) {
+				Move.point.set(jol.getPosition());
+				Move.RIGHTUP.move();
+				moveChack(jol, Move.point);
+			} else if (jol.getPosition().equals(castle[8])) {
+				Move.point.set(jol.getPosition());
 				Move.LEFTUP.move();
-				moveChack(Move.point);
-			} else if (Move.point.equals(board.castleup[5])) {
+				moveChack(jol, Move.point);
+			} else if (jol.getPosition().equals(castle[4])) {
+				Move.point.set(jol.getPosition());
+				Move.LEFTUP.move();
+				moveChack(jol, Move.point);
+				Move.point.set(jol.getPosition());
 				Move.RIGHTUP.move();
-				moveChack(Move.point);
-			} else if (Move.point.equals(board.castleup[8])) {
-				Move.RIGHTUP.move();
-				moveChack(Move.point);
-				Move.LEFT.move(2);
-				moveChack(Move.point);
+				moveChack(jol, Move.point);
 			}
 		}
+		return points.getMovable();
 	}
 
-	private boolean moveChack(Point p) {
+	public boolean move(Point p) {
+
+		return false;
+	}
+
+	private boolean moveChack(Piece jol, Point p) {
 		tmp_piece = board.getPiece(p);
 		if (tmp_piece == null) {
 			points.add(p);
 			return true;
 		}
-		if (getGroup().equals(tmp_piece.getGroup())) {
+		if (jol.isTeam(tmp_piece)) {
 			points.add(p);
 		}
-		return false;
-	}
-
-	@Override
-	public Point getPosition() {
-		return point;
-	}
-
-	@Override
-	public Point getOldPosition() {
-		return oldpoint;
-	}
-
-	@Override
-	public Name getKillPiece() {
-		return killname;
-	}
-
-	@Override
-	public Iterator<Point> getMovable() {
-		return null;
-	}
-
-	@Override
-	public boolean move(Point movepoint) {
 		return false;
 	}
 }

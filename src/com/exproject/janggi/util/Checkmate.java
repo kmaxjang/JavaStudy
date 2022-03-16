@@ -1,7 +1,8 @@
 package com.exproject.janggi.util;
 
 import com.exproject.janggi.Board;
-import com.exproject.janggi.piece.Piece;
+import com.exproject.janggi.interfacemod.Piece;
+import com.exproject.janggi.interfacemod.Piece.ClassName;
 
 public class Checkmate {
 
@@ -10,40 +11,13 @@ public class Checkmate {
 	private Points points = new Points(30);
 	private Piece tmp_piece;
 
-	private Move[] way = Move.values();
-
-	private Point[] sagpoint = {
-	    new Point(2, -3),
-	    new Point(3, -2),
-	    new Point(3, 2),
-	    new Point(2, 3),
-	    new Point(-2, 3),
-	    new Point(-3, 2),
-	    new Point(-3, -2),
-	    new Point(-2, -3)
-	};
-
-	private boolean checkChaPoo() {
-		for (int w = 0; w < way.length; w += 2) {
-			Move.point.set(king.getPosition());
-			way[w].move();
-			while (way[w].scope()) {
-				tmp_piece = board.getPiece(way[w].point);
-				way[w].move();
+	private boolean checkCha(Move m) {
+		m.move();
+		while (m.scope()) {
+			tmp_piece = board.getPiece(Move.point);
+			if (tmp_piece != null && !king.isTeam(tmp_piece) && tmp_piece.getClassName() == ClassName.CHA) {
+				return true;
 			}
-		}
-
-		return false;
-	}
-
-	private boolean moveChack(Point p) {
-		tmp_piece = board.getPiece(p);
-		if (tmp_piece == null) {
-			points.add(p);
-			return true;
-		}
-		if (!getGroup().equals(tmp_piece.getGroup())) {
-			points.add(p);
 		}
 		return false;
 	}
@@ -52,7 +26,7 @@ public class Checkmate {
 		this.board = b;
 		Move.point.set(king.getPosition());
 		// 차 경로
-		if (checkChaPoo()) {
+		if (checkCha(Move.UP) || checkCha(Move.DOWN) || checkCha(Move.LEFT) || checkCha(Move.RIGHT)) {
 
 		}
 		return false;

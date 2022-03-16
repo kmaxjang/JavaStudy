@@ -1,6 +1,6 @@
 package com.exproject.janggi;
 
-import com.exproject.janggi.interfacemod.PieceSet;
+import com.exproject.janggi.interfacemod.Piece;
 import com.exproject.janggi.util.Point;
 
 /* 장기번호
@@ -14,6 +14,34 @@ import com.exproject.janggi.util.Point;
  */
 
 public class GameRule {
+    
+    enum PieceInfo{
+	CHO( "초", 15),
+	HAN( "한", 0),
+	KING( "왕", 0),
+	CHA( "차", 130),
+	POO( "포", 70),
+	MA( "마", 50),
+	SAG( "상", 30),
+	SA( "사", 30),
+	JOL( "졸", 20);
+	
+	private final String name;
+	private final int score;
+	
+	private PieceInfo( String name, int score ) {
+	    this.name = name;
+	    this.score = score;
+	}
+	
+	public String getClassName(){
+	    return name;
+	}
+	
+	public int score(){
+	    return score;
+	}
+    }
     
     private Board board;
     // 장기말 기본정보
@@ -70,8 +98,8 @@ public class GameRule {
 	
     }
     
-    public int getPiece( PieceSet piece ){
-	return piece.info();
+    public int getPiece( Piece piece ){
+	return piece.infoCommand();
     }
     
     public boolean isCheckmate(){

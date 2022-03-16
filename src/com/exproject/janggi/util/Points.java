@@ -5,8 +5,9 @@ import java.util.Iterator;
 // 좌표들 기역
 public class Points {
 
-	private Point[] list; // 좌표들
+	private Point[] points; // 좌표들
 	private int limet = 0; // 현재용량
+//	private int capacity; // 최대용량 고정 mine 5 max 21
 
 	public Points(int capacity) {
 		if (capacity < 5) {
@@ -14,7 +15,10 @@ public class Points {
 		} else if (capacity > 21) {
 			capacity = 21;
 		}
-		list = new Point[capacity];
+		points = new Point[capacity];
+		for (int i = 0; i < points.length; i++) {
+			points[i] = new Point();
+		}
 	}
 
 	public int limet() {
@@ -22,59 +26,34 @@ public class Points {
 	}
 
 	public boolean add(Point p) {
-		if (limet < list.length) {
-			list[limet] = p.get();
-			limet++;
-			return true;
-		}
-		return false;
+		return add(p.getX(), p.getY());
 	}
 
 	public boolean add(int x, int y) {
-		if (limet < list.length) {
-			list[limet] = new Point(x, y);
+		if (limet < points.length) {
+			points[limet].set(x, y);
 			limet++;
 			return true;
-		}
-		return false;
-	}
-	
-	public boolean comper(Point p) {
-		for(int i = 0; i < limet; i++) {
-			if(list[i].equals(p)) {
-				return true;
-			}
 		}
 		return false;
 	}
 
 	public Iterator<Point> getMovable() {
 		return new Iterator<Point>() {
-			
-			private int count = limet;			
-			private Point[] iter;
-			{
-				System.arraycopy(list, 0, iter, 0, count);
-			}
-			
-			@Override
+			private int count = limet;
+
 			public boolean hasNext() {
 				return (count > 0);
 			}
-			
-			@Override
+
 			public Point next() {
 				count--;
-				return iter[count];
+				return points[count];
 			}
 		};
 	}
 
 	public void clear() {
 		limet = 0;
-	}
-	
-	public String toString() {
-		return "Length :"+list.length+" limet :"+ limet;
 	}
 }

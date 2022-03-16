@@ -3,109 +3,103 @@ package com.exproject.janggi.piece;
 import java.util.Iterator;
 
 import com.exproject.janggi.Board;
-import com.exproject.janggi.interfacemod.PieceSet;
+import com.exproject.janggi.interfacemod.Piece;
+import com.exproject.janggi.interfacemod.PieceMove;
 import com.exproject.janggi.util.Move;
-import com.exproject.janggi.util.PieceBuild;
 import com.exproject.janggi.util.Point;
 import com.exproject.janggi.util.Points;
 
-public class Cha extends Piece {
+public class Cha implements PieceMove {
+
 	private Board board;
 	private Points points = new Points(21);
-	private Point point = new Point();
-	private Point oldpoint = new Point();
-	private Name killname = null;
-	private PieceSet tmp_piece;
+	private Piece tmp_piece;
 
-	public Cha(Board board, PieceBuild piece) {
-		super(piece.getGroup(), piece.getName());
-		point.set(piece.getPosition());
-		oldpoint.set(piece.getOldPosition());
-		killname = piece.getKillName();
-		this.board = board;
+	public Cha() {
 	}
 
-	private void movable() {
+	/*
+	 * null = 기록 다른편일땄1�71ￄ1�77 = 기록 장군을1�71ￄ1�77 아닐땄1�71ￄ1�77= 기록
+	 */
+	public Iterator<Point> movable(Board b, Piece cha) {
+		this.board = b;
 		points.clear();
-		for (int w = 0; w < way.length; w += 2) {
-			Move.point.set(getPosition());
-			way[w].move();
-			while (way[w].scope() && moveChack(Move.point)) {
-				way[w].move();
-			}
+		Move.point.set(cha.getPosition());
+		Move.UP.move();
+		while (Move.point.getY() >= board.MIN_Y && moveChack(cha, Move.point)) {
+			Move.UP.move();
+		}
+		Move.point.set(cha.getPosition());
+		Move.DOWN.move();
+		while (Move.point.getY() < board.MAX_Y && moveChack(cha, Move.point)) {
+			Move.DOWN.move();
+		}
+		Move.point.set(cha.getPosition());
+		Move.LEFT.move();
+		while (Move.point.getX() >= board.MIN_X && moveChack(cha, Move.point)) {
+			Move.LEFT.move();
+		}
+		Move.point.set(cha.getPosition());
+		Move.RIGHT.move();
+		while (Move.point.getX() < board.MAX_X && moveChack(cha, Move.point)) {
+			Move.RIGHT.move();
 		}
 
-		Move.point.set(getPosition());
-		if (getPosition().equals(board.castleup[1]) || getPosition().equals(board.castledown[1])) {
-			Move.LEFTDOWN.move();
-			if (moveChack(Move.point)) {
-				Move.LEFTDOWN.move();
-				moveChack(Move.point);
+		if (cha.getPosition().equals(board.castleup[0]) || cha.getPosition().equals(board.castledown[0])) {
+			Move.point.set(cha.getPosition());
+			Move.RIGHT.move();
+			if (moveChack(cha, Move.point)) {
+				Move.RIGHT.move();
+				moveChack(cha, Move.point);
 			}
-		} else if (getPosition().equals(board.castleup[3]) || getPosition().equals(board.castledown[3])) {
+		} else if (cha.getPosition().equals(board.castleup[2]) || cha.getPosition().equals(board.castledown[2])) {
+			Move.point.set(cha.getPosition());
+			Move.LEFT.move();
+			if (moveChack(cha, Move.point)) {
+				Move.LEFT.move();
+				moveChack(cha, Move.point);
+			}
+		} else if (cha.getPosition().equals(board.castleup[4]) || cha.getPosition().equals(board.castledown[4])) {
+			Move.point.set(cha.getPosition());
 			Move.LEFTUP.move();
-			if (moveChack(Move.point)) {
-				Move.LEFTUP.move();
-				moveChack(Move.point);
-			}
-		} else if (getPosition().equals(board.castleup[5]) || getPosition().equals(board.castledown[5])) {
+			moveChack(cha, Move.point);
+			Move.point.set(cha.getPosition());
 			Move.RIGHTUP.move();
-			if (moveChack(Move.point)) {
-				Move.RIGHTUP.move();
-				moveChack(Move.point);
-			}
-		} else if (getPosition().equals(board.castleup[7]) || getPosition().equals(board.castledown[7])) {
+			moveChack(cha, Move.point);
+			Move.point.set(cha.getPosition());
+			Move.LEFTDOWN.move();
+			moveChack(cha, Move.point);
+			Move.point.set(cha.getPosition());
 			Move.RIGHTDOWN.move();
-			if (moveChack(Move.point)) {
-				Move.RIGHTDOWN.move();
-				moveChack(Move.point);
-			}
-		} else if (getPosition().equals(board.castleup[8]) || getPosition().equals(board.castledown[8])) {
+			moveChack(cha, Move.point);
+		} else if (cha.getPosition().equals(board.castleup[6]) || cha.getPosition().equals(board.castledown[6])) {
+			Move.point.set(cha.getPosition());
 			Move.RIGHTUP.move();
-			moveChack(Move.point);
-			Move.DOWN.move(2);
-			moveChack(Move.point);
-			Move.LEFT.move(2);
-			moveChack(Move.point);
-			Move.UP.move(2);
-			moveChack(Move.point);
+			if (moveChack(cha, Move.point)) {
+				Move.RIGHTUP.move();
+				moveChack(cha, Move.point);
+			}
+		} else if (cha.getPosition().equals(board.castleup[8]) || cha.getPosition().equals(board.castledown[8])) {
+			Move.point.set(cha.getPosition());
+			Move.LEFTUP.move();
+			if (moveChack(cha, Move.point)) {
+				Move.LEFTUP.move();
+				moveChack(cha, Move.point);
+			}
 		}
+		return points.getMovable();
 	}
 
-	private boolean moveChack(Point p) {
+	// �3�3�9�4�3�1�2�2 �3�3�9�4�7�5�8�6�4�7�5�9
+	private boolean moveChack(Piece cha, Point p) {
 		tmp_piece = board.getPiece(p);
 		if (tmp_piece == null) {
 			points.add(p);
 			return true;
 		}
-		if (!getGroup().equals(tmp_piece.getGroup())) {
+		if (cha.isTeam(tmp_piece)) {
 			points.add(p);
 		}
-		return false;
-	}
-
-	@Override
-	public Point getPosition() {
-		return point;
-	}
-
-	@Override
-	public Point getOldPosition() {
-		return oldpoint;
-	}
-
-	@Override
-	public Name getKillPiece() {
-		return killname;
-	}
-
-	@Override
-	public Iterator<Point> getMovable() {
-		return null;
-	}
-
-	@Override
-	public boolean move(Point movepoint) {
 		return false;
 	}
 }
