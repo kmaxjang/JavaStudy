@@ -2,13 +2,13 @@ package com.bighits.edit;
 
 import java.util.Iterator;
 
-public interface Block {
+public interface Block<T> {
 
-  public int getStart();
+	public int getStart();
 
-  public int getEnd();
+	public int getEnd();
 
-  public Iterator<Block> getBlock();
+	public Iterator<T> getBlock();
 
-  public int blockCount();
+	public int blockLength();
 }

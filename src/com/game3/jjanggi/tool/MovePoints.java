@@ -2,6 +2,10 @@ package com.game3.jjanggi.tool;
 
 import java.util.Iterator;
 
+/*
+ * 좌표모음 저장
+ */
+
 public class MovePoints {
 
 	private Point[] list;

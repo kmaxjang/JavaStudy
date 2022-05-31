@@ -1,30 +1,53 @@
-package com.bighits;
+package com.bighits.edit;
 
-public interface Data {
+public interface Data<T> {
+
 // 대이터 삭제
-public void deleteAll();
-public void delete();
-public void delete(int index);
-public void delete(int start, int end);
+	public boolean deleteAll();
+
+	public boolean delete();
+
+	public boolean delete(int index);
+
+	public boolean delete(int start, int end);
+
 // 대이터 삽입
-public void insert(Data data);
-public void insert(Data[] data);
-public void insert(int index, Data data);
-public void insert(int index, Data[] data);
+	public boolean insert(T data);
+
+	public boolean insert(T[] data);
+
+	public boolean insert(int index, T data);
+
+	public boolean insert(int index, T[] data);
+
 // 대이터 수정
-public void change(int index, Data data);
-public void change(int index, Data[] data);
-public void change(int start, int end, Data data);
-public void change(int start, int end, Data[] data);
+	public boolean change(T data);
 
-public Data get();
-public Data get(int index);
-public Data[] get(int start, int end);
+	public boolean change(T[] data);
 
-public int getPosition();
-public boolean setPosition(int point);
+	public boolean change(int index, T data);
 
-public long Size();
-public boolean isChange();
-public boolean isSave();
+	public boolean change(int index, T[] data);
+
+	public boolean change(int start, int end, T data);
+
+	public boolean change(int start, int end, T[] data);
+
+// 	
+	public T get();
+
+	public T get(int index);
+
+	public T[] get(int start, int end);
+
+// 정보	
+	public int getPosition();
+
+	public boolean setPosition(int point);
+
+	public long Size();
+
+	public boolean isChange();
+
+	public boolean isSave();
 }

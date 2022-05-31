@@ -1,5 +1,8 @@
 package com.janggi.game;
 
+/*
+ * 복사됨
+ */
 public final class Point {
 
 	public int x = 0;
@@ -26,14 +29,14 @@ public final class Point {
 		this.y = y;
 		return this;
 	}
-	
+
 	public int getX() {
 		return x;
 	}
 
 	public int getY() {
 		return y;
-	}	
+	}
 
 	public Point move(Point p) {
 		x += p.x;

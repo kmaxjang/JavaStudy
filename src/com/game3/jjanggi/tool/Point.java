@@ -1,6 +1,9 @@
 package com.game3.jjanggi.tool;
 
-// 좌표를 기억
+/*
+ *  좌표를 기억
+ */
+
 public final class Point {
 
 	public int x = 0;

@@ -1,5 +1,6 @@
 package com.array;
 
+// 배열회전
 public class Array {
 
 	public final int[] data;
@@ -16,7 +17,7 @@ public class Array {
 		}
 	}
 
-	// 범위
+	// 범위 1~100
 	private int scope(int velue) {
 		if (velue < 1) {
 			return 1;
@@ -24,6 +25,32 @@ public class Array {
 			return 100;
 		}
 		return velue;
+	}
+
+	// 1 -> 2차원 배열로 변환
+	public int[][] cubeArray(int[] data, int col, int row) {
+		int[][] cube = new int[col][row];
+		int count = 0;
+		for (int colc = 0; colc < col; colc++) {
+			for (int rowc = 0; rowc < row; rowc++) {
+				cube[colc][rowc] = data[count++];
+			}
+		}
+		return cube;
+	}
+
+	// 90 회전
+	public int[][] rotateMatrix(int[][] matrix, boolean rotate) {
+		/* W and H are already swapped */
+		int mx = matrix.length;
+		int my = matrix[0].length;
+		int[][] ret = new int[my][mx];
+		for (int x = 0; x < my; x++) {
+			for (int y = 0; y < mx; y++) {
+				ret[x][y] = (rotate) ? matrix[y][my - x - 1] : matrix[mx - y - 1][x];
+			}
+		}
+		return ret;
 	}
 
 	public void arrayPrint(int[][] array) {
@@ -41,7 +68,7 @@ public class Array {
 
 	public void arrayPrint(int[] array) {
 		StringBuffer sb = new StringBuffer((data.length * 4) + row);
-		sb.append("< Line Arry >\n");
+		sb.append("< Line Array >\n");
 		for (int c = 0; c < data.length; c++) {
 			sb.append("[" + String.format("%02d", data[c]) + "]");
 		}
@@ -49,37 +76,9 @@ public class Array {
 		System.out.println(sb);
 	}
 
-	public int[][] cubeArray(int[] data, int col, int row) {
-		int[][] ca = new int[col][row];
-		int count = 0;
-		for (int colc = 0; colc < col; colc++) {
-			for (int rowc = 0; rowc < row; rowc++) {
-				ca[colc][rowc] = data[count++];
-			}
-		}
-		return ca;
-	}
-
-	public int[][] rotateMatrix(int[][] matrix, boolean rotate) {
-		/* W and H are already swapped */
-		int mx = matrix.length;
-		int my = matrix[0].length;
-		int[][] ret = new int[my][mx];
-		for (int x = 0; x < my; x++) {
-			for (int y = 0; y < mx; y++) {
-				if (rotate) {
-					ret[x][y] = matrix[y][my - x - 1];
-				} else {
-					ret[x][y] = matrix[mx - y - 1][x];
-				}
-			}
-		}
-		return ret;
-	}
-
 	public static void main(String[] arg) {
 
-		Array a = new Array(9, 9);
+		Array a = new Array(3, 3);
 
 		a.arrayPrint(a.data);
 

@@ -4,6 +4,9 @@ import java.util.Iterator;
 
 import com.janggi.game.Point;
 
+/*
+ * 복사됨
+ */
 public class MovePoints {
 
 	private Point[] list;
