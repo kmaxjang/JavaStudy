@@ -1,4 +1,4 @@
-package com.nato;
+package com.natocode;
 
 import java.util.HashMap;
 

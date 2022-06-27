@@ -1,6 +1,6 @@
-package com.rotation;
+package com.sample.rotation;
 
-import com.rotation.Rotation.Index;
+import com.sample.rotation.Rotation.Index;
 
 public class MainClass {
 

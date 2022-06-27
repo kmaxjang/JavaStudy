@@ -1,4 +1,4 @@
-package com.array;
+package com.sample.binary;
 
 // 배열회전
 public class Array {

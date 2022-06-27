@@ -1,4 +1,4 @@
-package com.rotation;
+package com.sample.rotation;
 
 public interface Rotation<D> {
 

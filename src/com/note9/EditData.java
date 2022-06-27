@@ -1,37 +1,37 @@
 package com.note9;
 
-public interface EditData {
+public interface EditData<D> {
 // 삭제
-	public void delete();
+	public boolean delete();
 
-	public void delete(int index);
+	public boolean delete(int index);
 
-	public void delete(int start, int end);
+	public boolean delete(int start, int end);
 
 // 삽입
-	public void insert(EditData data);
+	public boolean insert(D data);
 
-	public void insert(EditData[] data);
+	public boolean insert(D[] data);
 
-	public void insert(int index, EditData data);
+	public boolean insert(int index, D data);
 
-	public void insert(int index, EditData[] data);
+	public boolean insert(int index, D[] data);
 
 // 변경
-	public void change(int index, EditData data);
+	public boolean change(int index, D data);
 
-	public void change(int index, EditData[] data);
+	public boolean change(int index, D[] data);
 
-	public void change(int start, int end, EditData data);
+	public boolean change(int start, int end, D data);
 
-	public void change(int start, int end, EditData[] data);
+	public boolean change(int start, int end, D[] data);
 
 // 파일정보
-	public EditData get();
+	public D get();
 
-	public EditData get(int index);
+	public D get(int index);
 
-	public EditData[] get(int start, int end);
+	public D[] get(int start, int end);
 
 // 포인트정보
 	public int getPosition();

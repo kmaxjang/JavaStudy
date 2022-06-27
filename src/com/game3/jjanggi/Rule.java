@@ -10,30 +10,11 @@ public class Rule {
 	public static final long list_time = 1 * 60;
 	public static final int move_max_counting = 200;
 
-	public static int[] score = {
-	    0,
-	    10,
-	    5,
-	    4,
-	    3,
-	    2,
-	    1
-	};
+	public static int[] score = { 0, 10, 5, 4, 3, 2, 1 };
 
-	public static String[] group = {
-	    "HAN",
-	    "CHO"
-	};
+	public static String[] group = { "HAN", "CHO" };
 
-	public static String[] piece = {
-	    "kING",
-	    "CHA",
-	    "POO",
-	    "MA",
-	    "SANG",
-	    "SA",
-	    "JOL"
-	};
+	public static String[] piece = { "kING", "CHA", "POO", "MA", "SANG", "SA", "JOL" };
 
 	public static final String start_group = group[1];
 

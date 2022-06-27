@@ -11,7 +11,7 @@ public class Sort {
 		}
 		System.out.print("[ ");
 		for (int d : arr) {
-//			if(d%6000 == 0) System.out.println(" "); // 화면라인 오버시 라인교체				
+			if(d%600 == 0) System.out.println(" "); // 화면라인 오버시 라인교체				
 			System.out.print(d + " ");
 		}
 		System.out.println("]");
@@ -24,8 +24,9 @@ public class Sort {
 		for (int p = 0; p < arr.length; p++) {
 			seed = r.nextInt(arr.length);
 			if (p == seed) {
-				if (p > 0)
+				if (p > 0) {
 					p--;
+				}
 				continue;
 			}
 			arr[p] = arr[seed] + arr[p];
@@ -62,7 +63,7 @@ public class Sort {
 		// max min
 		// max 6621 화면라인
 		// max 50000 이상 오래걸림
-		int size = 50000; // 배열크기
+		int size = 10000; // 배열크기
 		int[] array = new int[size];
 		{
 			while (size > 0) {
