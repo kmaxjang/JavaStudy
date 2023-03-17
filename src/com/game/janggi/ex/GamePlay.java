@@ -1,9 +1,9 @@
-package com.exproject.janggi;
+package com.game.janggi.ex;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.exproject.janggi.interfacemod.Play;
+import com.game.janggi.ex.interfacemod.Play;
 
 public class GamePlay {
 

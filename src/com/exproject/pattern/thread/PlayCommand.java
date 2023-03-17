@@ -1,6 +1,6 @@
 package com.exproject.pattern.thread;
 
-import com.exproject.janggi.util.Point;
+import com.game.janggi.ex.util.Point;
 
 public interface PlayCommand {
 

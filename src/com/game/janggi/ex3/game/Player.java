@@ -1,4 +1,4 @@
-package com.janggi.game;
+package com.game.janggi.ex3.game;
 
 public class Player {
 

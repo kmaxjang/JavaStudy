@@ -1,11 +1,11 @@
-package com.exproject.janggi.piece;
+package com.game.janggi.ex.piece;
 
 import java.util.ArrayList;
 
-import com.exproject.janggi.Board;
-import com.exproject.janggi.interfacemod.Piece;
-import com.exproject.janggi.util.Point;
-import com.exproject.janggi.util.Points;
+import com.game.janggi.ex.Board;
+import com.game.janggi.ex.interfacemod.Piece;
+import com.game.janggi.ex.util.Point;
+import com.game.janggi.ex.util.Points;
 
 public abstract class PieceMovable {
     

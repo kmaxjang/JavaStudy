@@ -1,64 +1,55 @@
-package com.exproject.janggi.piece;
+package com.game.janggi.ex.piece;
 
-import com.exproject.janggi.interfacemod.Piece;
-import com.exproject.janggi.util.Point;
+import com.game.janggi.ex.interfacemod.Piece;
+import com.game.janggi.ex.util.Point;
 
 // 장기말 기본정의 Piece인터페이스 구현
 public class PieceSet implements Piece {
 
-  private char[] pieceinfo;
+  private final int[] pieceinfo;
   private Point now_point = new Point(0, 0);
 
   public PieceSet(int piece) {
-    this(String.valueOf(piece));
-    System.out.println("숫자"+piece);
+      int[] tmp2 = new int[7];
+      int count = 1000000;
+    for(int a =0; a < tmp2.length; a++) {
+	System.out.println("숫자"+piece);
+	tmp2[a] = piece / count;
+	piece = piece % count;
+	count = count/10;	
+    }
+    pieceinfo = tmp2;    
+    System.out.println("문자"+getTeam()+" "+getPieceName()+" 좌표"+getPosition());
   }
 
   public PieceSet(String piece) {
-    pieceinfo = piece.toCharArray();
-    System.out.println("문자"+getTeamName()+" "+getClassName()+"좌표"+getPosition().getX()+" "+getPosition().getY());
+    char[] tmp = piece.toCharArray();
+    int[] tmp2 = new int[tmp.length];
+    for(int a =0; a < tmp.length; a++) {
+	tmp2[a] = tmp[a]- 0x30;
+    }
+    pieceinfo = tmp2;
+    System.out.println("문자"+getTeam()+" "+getPieceName()+"좌표"+getPosition());
   }
 
   @Override
   public boolean isTeam(Piece piece) {
-    return (pieceinfo[Info.TEAM.POINT] == piece.parse(Info.TEAM).charAt(0));
+    return false;
   }
 
   @Override
-  public Team getTeamName() {
-    switch (pieceinfo[Info.TEAM.POINT]) {
-      case '1':
-        return Team.CHO;
-      case '2':
-        return Team.HAN;
-    }
-    return null;
+  public Team getTeam() {
+    return Team.get(parseInt(PieceCode.TEAM));
   }
 
   @Override
-  public ClassName getClassName() {
-    switch (pieceinfo[Info.CLASS.POINT]) {
-      case '7':
-        return ClassName.CHA;
-      case '6':
-        return ClassName.POO;
-      case '5':
-        return ClassName.MA;
-      case '4':
-        return ClassName.SAG;
-      case '3':
-        return ClassName.SA;
-      case '2':
-        return ClassName.JOL;
-      case '1':
-        return ClassName.KING;
-    }
-    return null;
+  public PieceName getPieceName() {    
+    return PieceName.get(parseInt(PieceCode.PIECE_NAME));
   }
 
   @Override
-  public String info() {
-    return String.valueOf(pieceinfo);
+  public Piece info() {
+    return Piece.valueOf(pieceinfo);
   }
 
   @Override
@@ -67,31 +58,42 @@ public class PieceSet implements Piece {
   }
 
   @Override
-  public int parseInt(Info p) {
-    return Integer.valueOf(parse(p));
+  public int parseInt(PieceCode p) {
+    return pieceinfo[p.get()];
   }
 
   @Override
-  public String parse(Info p) {
-    return String.valueOf(pieceinfo[p.POINT]);
+  public Piece parse(PieceCode p) {
+    return Piece.valueOf(pieceinfo[p.get()]);
   }
 
   @Override
   public boolean move(Point p, Piece killpiece) {
-    pieceinfo[Info.OLD_X.POINT] = pieceinfo[Info.NOW_X.POINT];
-    pieceinfo[Info.OLD_Y.POINT] = pieceinfo[Info.NOW_Y.POINT];
-    pieceinfo[Info.NOW_X.POINT] = (char)(p.getX()+0x30);
-    pieceinfo[Info.NOW_Y.POINT] = (char)(p.getY()+0x30);
-
-    pieceinfo[Info.KILL_CLASS.POINT] = (killpiece != null) ?killpiece.getClassName().NUMBER.charAt(0) : '0';
+    pieceinfo[PieceCode.OLD_X.get()] = pieceinfo[PieceCode._X.get()];
+    pieceinfo[PieceCode.OLD_Y.get()] = pieceinfo[PieceCode._Y.get()];
+    pieceinfo[PieceCode._X.get()] = p.getX();
+    pieceinfo[PieceCode._Y.get()] = p.getY();
+    pieceinfo[PieceCode.KILL_PIECE.get()] = (killpiece != null) ?killpiece.getPieceName().CODE : '0';
     return true;
   }
 
   @Override
   public Point getPosition() {
-      now_point.setX(parseInt(Info.NOW_X));
-      now_point.setY(parseInt(Info.NOW_Y));
+      now_point.setX(parseInt(PieceCode._X));
+      now_point.setY(parseInt(PieceCode._Y));
     return now_point;
   }
+
+@Override
+public Point getOldPosition() {
+    // TODO Auto-generated method stub
+    return null;
+}
+
+@Override
+public PieceName getKillName() {
+    // TODO Auto-generated method stub
+    return null;
+}
 
 }

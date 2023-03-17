@@ -1,8 +1,8 @@
-package com.exproject.janggi;
+package com.game.janggi.ex;
 
-import com.exproject.janggi.util.Move;
-import com.exproject.janggi.util.PieceBuild;
-import com.exproject.janggi.util.Point;
+import com.game.janggi.ex.util.Move;
+import com.game.janggi.ex.util.PieceBuild;
+import com.game.janggi.ex.util.Point;
 
 public class MainClass {
 

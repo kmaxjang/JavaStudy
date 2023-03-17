@@ -1,11 +1,11 @@
-package com.exproject.janggi.interfacemod;
+package com.game.janggi.ex.interfacemod;
 
 import java.util.Iterator;
 
-import com.exproject.janggi.Board;
-import com.exproject.janggi.util.Point;
+import com.game.janggi.ex.ex1.Board;
+import com.game.janggi.ex.util.Point;
 
 public interface PieceMove {
 
-  public Iterator<Point> movable(Board board, Piece piece);
+  public Iterator<Point> moveable(Board board, Piece piece);
 }

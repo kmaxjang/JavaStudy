@@ -1,8 +1,8 @@
-package com.jjanggi2;
+package com.game.janggi.ex4;
 
 import java.util.Iterator;
 
-import com.jjanggi2.server.MainServer;
+import com.game.janggi.ex4.server.MainServer;
 
 public abstract class Player {
 	

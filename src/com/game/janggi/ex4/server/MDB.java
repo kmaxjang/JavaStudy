@@ -1,4 +1,4 @@
-package com.jjanggi2.server;
+package com.game.janggi.ex4.server;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

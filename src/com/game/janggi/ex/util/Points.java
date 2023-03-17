@@ -1,4 +1,4 @@
-package com.exproject.janggi.util;
+package com.game.janggi.ex.util;
 
 import java.util.Iterator;
 

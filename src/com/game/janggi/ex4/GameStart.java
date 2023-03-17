@@ -1,12 +1,9 @@
-package com.jjanggi2;
+package com.game.janggi.ex4;
 
 import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
-import com.jjanggi2.server.MainServer;
-import com.jjanggi2.server.PlayerAccession;
-import com.jjanggi2.server.User;
+import com.game.janggi.ex4.server.MainServer;
+import com.game.janggi.ex4.server.PlayerAccession;
 
 public class GameStart {
 

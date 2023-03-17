@@ -1,11 +1,11 @@
-package com.exproject.janggi.interfacemod;
+package com.game.janggi.ex.interfacemod;
 
 public interface Play {
 
-public boolean turnEnd(String number);
-public String gameover();
+public boolean turnEnd(Piece number);
+public Piece gameover();
 public boolean turn();
-public String getTime();
+public Piece getTime();
 public boolean team();
 
 }

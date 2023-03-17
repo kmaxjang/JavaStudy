@@ -2,10 +2,10 @@ package com.exproject.pattern.composite;
 
 import java.util.Iterator;
 
-import com.exproject.janggi.Board;
-import com.exproject.janggi.interfacemod.Piece;
-import com.exproject.janggi.interfacemod.Piece.Info;
-import com.exproject.janggi.util.Point;
+import com.game.janggi.ex.Board;
+import com.game.janggi.ex.interfacemod.Piece;
+import com.game.janggi.ex.interfacemod.Piece.PieceCodeInfo;
+import com.game.janggi.ex.util.Point;
 
 public class Displays {
 
@@ -16,8 +16,8 @@ public class Displays {
   private int[][] board = new int[maxx][maxy];
   private boolean[][] mark_check = new boolean[maxx][maxy];
 
-  private String mark_space = "⬛";
-  private String mark_choice = "⭕";
+  private Piece mark_space = "⬛";
+  private Piece mark_choice = "⭕";
 
   private Board exboard = new Board();
 
@@ -55,7 +55,7 @@ public class Displays {
     System.out.println(mark);
   }
 
-  public String getPiece(int piece) {
+  public Piece getPiece(int piece) {
     switch (piece) {
       case 11:
         return "🦁";
@@ -108,7 +108,7 @@ public class Displays {
     Iterator<Piece> list = exboard.getPieceList();
     while (list.hasNext()) {
       Piece piece = list.next();
-      setPiece(piece.getPosition(), piece.parseInt(Info.TEAM) * 10 + piece.parseInt(Info.CLASS));
+      setPiece(piece.getPosition(), piece.parseInt(PieceCodeInfo.TEAM) * 10 + piece.parseInt(PieceCodeInfo.CLASS));
     }
   }
 
@@ -123,7 +123,7 @@ public class Displays {
     }
   }
 
-  public static void main(String[] args) {
+  public static void main(Piece[] args) {
     Displays ds = new Displays();
 
     ds.m();

@@ -1,6 +1,5 @@
 package com.ex3;
 
-import java.util.Date;
 import java.util.Random;
 
 public class Search {
@@ -76,6 +75,7 @@ public class Search {
     Random seed = new Random();
     for (int i = 1; i < data.length; i++) {
       data[i] = data[i - 1] + seed.nextInt(100);
+      System.out.println("data[" + i + "]=" + data[i]);
     }
     System.out.println("찾는수 위치" + data[10000]);
     Search s = new Search();

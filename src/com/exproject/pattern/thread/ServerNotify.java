@@ -1,6 +1,6 @@
 package com.exproject.pattern.thread;
 
-import com.exproject.janggi.interfacemod.Event;
+import com.game.janggi.ex.interfacemod.Event;
 
 public interface ServerNotify {
 

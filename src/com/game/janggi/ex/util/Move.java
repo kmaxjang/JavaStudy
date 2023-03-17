@@ -1,4 +1,4 @@
-package com.exproject.janggi.util;
+package com.game.janggi.ex.util;
 
 // 이동좌표 계산
 public enum Move {

@@ -1,4 +1,4 @@
-package com.game.worm;
+package com.game2.worm;
 // 방향
 public enum Way {
   UP(0, -1),

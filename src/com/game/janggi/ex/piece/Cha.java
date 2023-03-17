@@ -1,13 +1,13 @@
-package com.exproject.janggi.piece;
+package com.game.janggi.ex.piece;
 
 import java.util.Iterator;
 
-import com.exproject.janggi.Board;
-import com.exproject.janggi.interfacemod.Piece;
-import com.exproject.janggi.interfacemod.PieceMove;
-import com.exproject.janggi.util.Move;
-import com.exproject.janggi.util.Point;
-import com.exproject.janggi.util.Points;
+import com.game.janggi.ex.ex1.Board;
+import com.game.janggi.ex.interfacemod.Piece;
+import com.game.janggi.ex.interfacemod.PieceMove;
+import com.game.janggi.ex.util.Move;
+import com.game.janggi.ex.util.Point;
+import com.game.janggi.ex.util.Points;
 
 public class Cha implements PieceMove {
 
@@ -21,7 +21,7 @@ public class Cha implements PieceMove {
 	/*
 	 * null = 기록 다른편일땄1�71ￄ1�77 = 기록 장군을1�71ￄ1�77 아닐땄1�71ￄ1�77= 기록
 	 */
-	public Iterator<Point> movable(Board b, Piece cha) {
+	public Iterator<Point> moveable(Board b, Piece cha) {
 		this.board = b;
 		points.clear();
 		Move.point.set(cha.getPosition());

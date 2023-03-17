@@ -1,8 +1,8 @@
-package com.janggi.game;
+package com.game.janggi.ex3.game;
 
-import com.janggi.game.util.Group;
-import com.janggi.game.util.MovePoints;
-import com.janggi.game.util.PieceSet;
+import com.game.janggi.ex3.game.util.Group;
+import com.game.janggi.ex3.game.util.MovePoints;
+import com.game.janggi.ex3.game.util.PieceSet;
 
 public abstract class Piece {
 

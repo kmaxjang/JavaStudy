@@ -1,4 +1,4 @@
-package com.game.worm;
+package com.game2.worm;
 
 import java.util.ArrayList;
 import java.util.Iterator;

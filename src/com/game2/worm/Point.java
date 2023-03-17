@@ -1,4 +1,4 @@
-package com.game.worm;
+package com.game2.worm;
 // 좌표기역
 public class Point {
 

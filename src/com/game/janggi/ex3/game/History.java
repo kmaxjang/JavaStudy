@@ -1,4 +1,4 @@
-package com.janggi.game;
+package com.game.janggi.ex3.game;
 
 import java.util.List;
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
-package com.jjanggi2.player;
+package com.game.janggi.ex4.player;
 
-import com.jjanggi2.Events;
-import com.jjanggi2.Player;
+import com.game.janggi.ex4.Events;
+import com.game.janggi.ex4.Player;
 
 public class Computer extends Player{
 

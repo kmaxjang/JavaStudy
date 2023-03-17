@@ -1,5 +1,7 @@
 package com.ex2.tool;
 
+import java.util.Iterator;
+
 public class Land {
 
 	private Time time = null;
@@ -47,7 +49,9 @@ public class Land {
 		// 첫라인 64 첫행 3 Size x19,y24
 		// 좌표공식 67 + x +(24 * y)
 		int po = 0;
-		for (Info deliver : time.iterator()) {
+		Iterator<Influence> timeiter = time.iterator();
+		while(timeiter.hasNext()) {
+			Influence deliver = timeiter.next();
 			Point p = deliver.getPoint();
 			po = 67 + p.x + (24 * p.y);
 			switch (deliver.getGroup()) {

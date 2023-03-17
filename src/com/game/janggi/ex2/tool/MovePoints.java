@@ -1,4 +1,4 @@
-package com.game3.jjanggi.tool;
+package com.game.janggi.ex2.tool;
 
 import java.util.Iterator;
 
@@ -28,13 +28,13 @@ public class MovePoints {
 		list[limet] = p;
 	}
 
-	public boolean comper(Point p) {
+	public int comper(Point p) {
 		for (int i = 0; i < limet; i++) {
-			if (list[i].comper(p)) {
-				return true;
+			if (list[i].equals(p)) {
+				return i;
 			}
 		}
-		return false;
+		return -1;
 	}
 
 	public void reset() {

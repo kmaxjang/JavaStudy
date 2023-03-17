@@ -1,8 +1,8 @@
-package com.janggi.game.util;
+package com.game.janggi.ex3.game.util;
 
 import java.util.Iterator;
 
-import com.janggi.game.Point;
+import com.game.janggi.ex3.game.Point;
 
 /*
  * 복사됨

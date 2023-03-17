@@ -1,9 +1,7 @@
-package com.game;
+package com.game2.worm;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import com.game.worm.Point;
 
 public class ExWorm {
 

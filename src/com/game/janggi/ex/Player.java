@@ -1,10 +1,10 @@
-package com.exproject.janggi;
+package com.game.janggi.ex;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.exproject.janggi.interfacemod.Play;
-import com.exproject.janggi.interfacemod.TimeRequester;
+import com.game.janggi.ex.interfacemod.Play;
+import com.game.janggi.ex.interfacemod.TimeRequester;
 
 public class Player implements TimeRequester {
 

@@ -1,4 +1,4 @@
-package com.jjanggi2.server;
+package com.game.janggi.ex4.server;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-import com.jjanggi2.Player;
+import com.game.janggi.ex4.Player;
 
 public final class MainServer implements Runnable {
 

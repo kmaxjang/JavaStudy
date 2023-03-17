@@ -1,9 +1,9 @@
-package com.exproject.janggi;
+package com.game.janggi.ex;
 
 import java.util.Iterator;
 
-import com.exproject.janggi.interfacemod.PieceSet;
-import com.exproject.janggi.util.Point;
+import com.game.janggi.ex.interfacemod.PieceSet;
+import com.game.janggi.ex.util.Point;
 
 public class Displays {
 
@@ -79,7 +79,7 @@ public class Displays {
 
 	private String getPiece(PieceSet piece) {
 		if (piece != null) {
-			switch (piece.getGroup()) {
+			switch (piece.getTeam()) {
 			case HAN:
 				switch (piece.getName()) {
 				case KING:
@@ -123,7 +123,7 @@ public class Displays {
 		PieceSet piece;
 		Point tmp_point = new Point();
 		Displays ds = new Displays();
-		com.exproject.janggi.Board exboard = new com.exproject.janggi.Board();
+		com.game.janggi.ex.Board exboard = new com.game.janggi.ex.Board();
 
 		ds.displaysUpdata(exboard.getPieceList());
 		piece = exboard.getPiece(0, 3);

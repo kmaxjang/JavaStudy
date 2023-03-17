@@ -1,137 +1,139 @@
-package com.jjanggi2;
-import java.awt.Point;
+package com.game.janggi.ex4;
+
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.game.janggi.ex2.tool.Point;
+
 public class JanggiBoard implements Board {
-	/*
-	 * ����� �迭
-	 */
-	private boolean playflag = false; // ��� ����
 
-	/*
-	 * �� ���
-	 */
-	private Chess[] chesslist = new Chess[32];
+    private Group turn = Group.Cho;
+    private List<Piece> piecelist = new ArrayList<>();
+    private Piece[][] board = new Piece[Board.max_x][Board.max_y];
 
-	/*
-	 * ���� �ڸ� ��ġ
-	 */
-	private int[][] msms = { { 1, 2, 6, 7 }, // ���󸶻�
-			{ 1, 2, 7, 6 }, // �����
-			{ 2, 1, 6, 7 }, // �󸶸���
-			{ 2, 1, 7, 6 } };// �󸶻�
+    private int[][] msms = { { 1, 2, 6, 7 }, //
+	    { 1, 2, 7, 6 }, //
+	    { 2, 1, 6, 7 }, //
+	    { 2, 1, 7, 6 } };
 
-	public JanggiBoard() {
+    public JanggiBoard() {
+	reset();
+	setDefaultBoard(1, 1);
 
-		setDefaultBoard(null, 1, 1);
+    }
 
+    private void reset() {
+	for (int y = 0; y < board[0].length; y++) {
+	    for (int x = 0; x < board.length; x++) {
+		board[x][y] = null;
+	    }
+	}
+    }
+
+    public void setDefaultBoard(int tms, int fms) {
+
+	piecelist.add(new JangChess(this, Group.Han, PieceName.Cha, new Point(0, 0)));
+	piecelist.add(new JangChess(this, Group.Han, PieceName.Sa, new Point(3, 0)));
+	piecelist.add(new JangChess(this, Group.Han, PieceName.Sa, new Point(5, 0)));
+	piecelist.add(new JangChess(this, Group.Han, PieceName.Cha, new Point(8, 0)));
+	piecelist.add(new JangChess(this, Group.Han, PieceName.King, new Point(4, 1)));
+	piecelist.add(new JangChess(this, Group.Han, PieceName.Poo, new Point(1, 2)));
+	piecelist.add(new JangChess(this, Group.Han, PieceName.Poo, new Point(7, 2)));
+	piecelist.add(new JangChess(this, Group.Han, PieceName.Jol, new Point(0, 3)));
+	piecelist.add(new JangChess(this, Group.Han, PieceName.Jol, new Point(2, 3)));
+	piecelist.add(new JangChess(this, Group.Han, PieceName.Jol, new Point(4, 3)));
+	piecelist.add(new JangChess(this, Group.Han, PieceName.Jol, new Point(6, 3)));
+	piecelist.add(new JangChess(this, Group.Han, PieceName.Jol, new Point(8, 3)));
+
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.Cha, new Point(0, 9)));
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.Sa, new Point(3, 9)));
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.Sa, new Point(5, 9)));
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.Cha, new Point(8, 9)));
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.King, new Point(4, 8)));
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.Poo, new Point(1, 7)));
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.Poo, new Point(7, 7)));
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.Jol, new Point(0, 6)));
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.Jol, new Point(2, 6)));
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.Jol, new Point(4, 6)));
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.Jol, new Point(6, 6)));
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.Jol, new Point(8, 6)));
+
+	piecelist.add(new JangChess(this, Group.Han, PieceName.Ma, new Point(msms[tms][0], 0)));
+	piecelist.add(new JangChess(this, Group.Han, PieceName.Sang, new Point(msms[tms][1], 0)));
+	piecelist.add(new JangChess(this, Group.Han, PieceName.Ma, new Point(msms[tms][2], 0)));
+	piecelist.add(new JangChess(this, Group.Han, PieceName.Sang, new Point(msms[tms][3], 0)));
+
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.Ma, new Point(msms[fms][0], 9)));
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.Sang, new Point(msms[fms][1], 9)));
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.Ma, new Point(msms[fms][2], 9)));
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.Sang, new Point(msms[fms][3], 9)));
+
+	piecelist.add(new JangChess(this, Group.Cho, PieceName.Sang, new Point(3, 7)));
+
+	for (int x1 = 0; piecelist.size() > x1; x1++) {
+	    System.out.println("Code " + piecelist.get(x1).getCode() + " Group " + piecelist.get(x1).getGroup()
+		    + " Point" + piecelist.get(x1).getPoint());
+	    Point p = piecelist.get(x1).getPoint();
+	    board[p.x][p.y] = piecelist.get(x1);
 	}
 
-	@Override
-	public Chess getChess(Point position) {
-		return board[position.x][position.y];
-	}
-
-	public List<Point> moveCheck(Chess chess) {
-
-		return null;
-	}
-
-	public void setDefaultBoard(Chess[] newchesslist, int tms, int fms) {
-
-		chesslist[0] = new JangChess(this, true, Chess.type.CH, new Point(0, 0));
-		chesslist[1] = new JangChess(this, true, Chess.type.SA, new Point(3, 0));
-		chesslist[2] = new JangChess(this, true, Chess.type.SA, new Point(5, 0));
-		chesslist[3] = new JangChess(this, true, Chess.type.CH, new Point(8, 0));
-		chesslist[4] = new JangChess(this, true, Chess.type.KG, new Point(4, 1));
-		chesslist[5] = new JangChess(this, true, Chess.type.PO, new Point(1, 2));
-		chesslist[6] = new JangChess(this, true, Chess.type.PO, new Point(7, 2));
-		chesslist[7] = new JangChess(this, true, Chess.type.JU, new Point(0, 3));
-		chesslist[8] = new JangChess(this, true, Chess.type.JU, new Point(2, 3));
-		chesslist[9] = new JangChess(this, true, Chess.type.JU, new Point(4, 3));
-		chesslist[10] = new JangChess(this, true, Chess.type.JU, new Point(6, 3));
-		chesslist[11] = new JangChess(this, true, Chess.type.JU, new Point(8, 3));
-
-		chesslist[12] = new JangChess(this, false, Chess.type.CH, new Point(0, 9));
-		chesslist[13] = new JangChess(this, false, Chess.type.SA, new Point(3, 9));
-		chesslist[14] = new JangChess(this, false, Chess.type.SA, new Point(5, 9));
-		chesslist[15] = new JangChess(this, false, Chess.type.CH, new Point(8, 9));
-		chesslist[16] = new JangChess(this, false, Chess.type.KG, new Point(4, 8));
-		chesslist[17] = new JangChess(this, false, Chess.type.PO, new Point(1, 7));
-		chesslist[18] = new JangChess(this, false, Chess.type.PO, new Point(7, 7));
-		chesslist[19] = new JangChess(this, false, Chess.type.JU, new Point(0, 6));
-		chesslist[20] = new JangChess(this, false, Chess.type.JU, new Point(2, 6));
-		chesslist[21] = new JangChess(this, false, Chess.type.JU, new Point(4, 6));
-		chesslist[22] = new JangChess(this, false, Chess.type.JU, new Point(6, 6));
-		chesslist[23] = new JangChess(this, false, Chess.type.JU, new Point(8, 6));
-
-		chesslist[24] = new JangChess(this, true, Chess.type.MA, new Point(msms[tms][0], 0));
-		chesslist[25] = new JangChess(this, true, Chess.type.SN, new Point(msms[tms][1], 0));
-		chesslist[26] = new JangChess(this, true, Chess.type.MA, new Point(msms[tms][2], 0));
-		chesslist[27] = new JangChess(this, true, Chess.type.SN, new Point(msms[tms][3], 0));
-
-		chesslist[28] = new JangChess(this, false, Chess.type.MA, new Point(msms[fms][0], 9));
-		chesslist[29] = new JangChess(this, false, Chess.type.SN, new Point(msms[fms][1], 9));
-		chesslist[30] = new JangChess(this, false, Chess.type.MA, new Point(msms[fms][2], 9));
-		chesslist[31] = new JangChess(this, false, Chess.type.SN, new Point(msms[fms][3], 9));
-
-		for (int x = 0; board.length > x; x++) {
-			for (int y = 0; board[0].length > y; y++) {
-				board[x][y] = null;
-			}
+	for (int y = 0; y < board[0].length; y++) {
+	    for (int x = 0; x < board.length; x++) {
+		if (board[x][y] == null) {
+		    System.out.print("00 ");
+		} else {
+		    System.out.print(board[x][y].getCode() + " ");
 		}
+	    }
+	    System.out.println("완료");
+	}
+    }
 
-		for (int x1 = 0; chesslist.length > x1; x1++) {
-			System.out.println(" " + chesslist[x1].isTeams() + " " + chesslist[x1].getType() + " "
-					+ chesslist[x1].getNowPosition());
+    public static void main(String arg[]) {
 
-			Point p = chesslist[x1].getNowPosition();
-			board[p.x][p.y] = chesslist[x1];
+	Board board = new JanggiBoard();
+	Iterator<Piece> chess = board.getNowPiece();
+	while (chess.hasNext()) {
+	    Iterator<Point> movable = chess.next().getMovable();
+	    if (movable != null) {
+		System.out.print("이동 ");
+		while (movable.hasNext()) {
+		    System.out.print(movable.next() + " ");
 		}
-
-		for (int x = 0; board.length > x; x++) {
-			for (int y = 0; board[0].length > y; y++) {
-				if (board[x][y] == null) {
-					System.out.print("    ");
-				} else {
-					System.out.print(board[x][y].getType());
-				}
-			}
-			System.out.println("");
-		}
+		System.out.println();
+	    }
 	}
 
-	public static void main(String arg[]) {
+    }
 
-		Board board = new JanggiBoard();
-		Chess[] chess = board.getAllChess();
+    @Override
+    public boolean isPieceCheck(Point position) {
+	return board[position.x][position.y] != null;
+    }
 
-		List<Point> list = chess[6].getMoveList();
-		if (list != null) {
-			System.out.println("�̵�" + list.size());
-			Iterator<Point> ip = list.iterator();
-			while (ip.hasNext()) {
-				System.out.println(ip.next());
-			}
-		}
+    @Override
+    public Group isTurn() {
+	return turn;
+    }
 
-	}
+    @Override
+    public Piece getPiece(Point position) {
+	return board[position.x][position.y];
+    }
 
-	@Override
-	public Chess[] getAllChess() {
+    @Override
+    public Iterator<Piece> getNowPiece() {
+	return piecelist.iterator();
+    }
 
-		return chesslist;
-	}
+    @Override
+    public int getCount() {
+	return 0;
+    }
 
-	@Override
-	public boolean isCheck(Point position) {
-		return (board[position.x][position.y] != null) ? true : false;
-	}
-
-	@Override
-	public void setChess(Chess chess) {
-
-	}
-
+    @Override
+    public Point getListPiece() {	
+	return null;
+    }
 }

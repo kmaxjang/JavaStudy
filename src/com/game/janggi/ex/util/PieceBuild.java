@@ -1,34 +1,34 @@
-package com.exproject.janggi.util;
+package com.game.janggi.ex.util;
 
-import com.exproject.janggi.interfacemod.PieceSet.Group;
-import com.exproject.janggi.interfacemod.PieceSet.Name;
+import com.game.janggi.ex.interfacemod.PieceSet.Team;
+import com.game.janggi.ex.interfacemod.PieceSet.PieceName;
 
 public class PieceBuild {
 
-	private Group group;
-	private Name name;
+	private Team group;
+	private PieceName name;
 	private Point now = new Point();
 	private Point old = new Point();
-	private Name kill = null;
+	private PieceName kill = null;
 
 	public void set(String piece) {
-		group = Group.get(piece.substring(0, 1));
-		name = Name.get(piece.substring(1, 2));
+		group = Team.get(piece.substring(0, 1));
+		name = PieceName.get(piece.substring(1, 2));
 		now.set(piece.substring(2, 4));
 		old.set(piece.substring(4, 6));
 		int k = Integer.parseInt(piece.substring(6));
 		if (k == 0) {
 			kill = null;
 		} else {
-			kill = Name.get(piece.substring(6));
+			kill = PieceName.get(piece.substring(6));
 		}
 	}
 
-	public Group getGroup() {
+	public Team getGroup() {
 		return group;
 	}
 
-	public Name getName() {
+	public PieceName getName() {
 		return name;
 	}
 
@@ -40,7 +40,7 @@ public class PieceBuild {
 		return old;
 	}
 
-	public Name getKillName() {
+	public PieceName getKillName() {
 		return kill;
 	}
 }

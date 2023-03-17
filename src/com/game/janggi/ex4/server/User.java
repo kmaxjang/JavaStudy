@@ -1,10 +1,10 @@
-package com.jjanggi2.server;
+package com.game.janggi.ex4.server;
 
 
 import java.util.Iterator;
 
-import com.jjanggi2.Events;
-import com.jjanggi2.Player;
+import com.game.janggi.ex4.Events;
+import com.game.janggi.ex4.Player;
 
 public class User extends Player{
 	

@@ -1,13 +1,13 @@
-package com.exproject.janggi.piece;
+package com.game.janggi.ex.piece;
 
 import java.util.Iterator;
 
-import com.exproject.janggi.Board;
-import com.exproject.janggi.interfacemod.Piece;
-import com.exproject.janggi.interfacemod.PieceMove;
-import com.exproject.janggi.util.Move;
-import com.exproject.janggi.util.Point;
-import com.exproject.janggi.util.Points;
+import com.game.janggi.ex.Board;
+import com.game.janggi.ex.interfacemod.Piece;
+import com.game.janggi.ex.interfacemod.PieceMove;
+import com.game.janggi.ex.util.Move;
+import com.game.janggi.ex.util.Point;
+import com.game.janggi.ex.util.Points;
 
 public class Poo implements PieceMove {
 	private Board board;
@@ -21,7 +21,7 @@ public class Poo implements PieceMove {
 	/*
 	 * null = 기록 다른편일땄1�7 = 기록 장군을1�7 아닐땄1�7= 기록
 	 */
-	public Iterator<Point> movable(Board b, Piece poo) {
+	public Iterator<Point> moveable(Board b, Piece poo) {
 		this.board = b;
 		points.clear();
 		Move.point.set(poo.getPosition());
@@ -29,7 +29,7 @@ public class Poo implements PieceMove {
 		while (Move.point.getY() > 0) {
 			tmp_piece = board.getPiece(Move.point);
 			if (tmp_piece != null) {
-				if (!tmp_piece.getClassName().equals(poo.getClassName())) {
+				if (!tmp_piece.getPieceName().equals(poo.getPieceName())) {
 					Move.UP.move();
 					while (Move.point.getY() > board.MIN_Y && moveChack(poo, Move.point)) {
 						Move.UP.move();
@@ -45,7 +45,7 @@ public class Poo implements PieceMove {
 		while (Move.point.getY() < board.MAX_Y - 1) {
 			tmp_piece = board.getPiece(Move.point);
 			if (tmp_piece != null) {
-				if (!tmp_piece.getClassName().equals(poo.getClassName())) {
+				if (!tmp_piece.getPieceName().equals(poo.getPieceName())) {
 					Move.DOWN.move();
 					while (Move.point.getY() < board.MAX_Y && moveChack(poo, Move.point)) {
 						Move.DOWN.move();
@@ -61,7 +61,7 @@ public class Poo implements PieceMove {
 		while (Move.point.getX() > 0) {
 			tmp_piece = board.getPiece(Move.point);
 			if (tmp_piece != null) {
-				if (!tmp_piece.getClassName().equals(poo.getClassName())) {
+				if (!tmp_piece.getPieceName().equals(poo.getPieceName())) {
 					Move.LEFT.move();
 					while (Move.point.getX() >= board.MIN_X && moveChack(poo, Move.point)) {
 						Move.LEFT.move();
@@ -77,7 +77,7 @@ public class Poo implements PieceMove {
 		while (Move.point.getX() < board.MAX_X - 1) {
 			tmp_piece = board.getPiece(Move.point);
 			if (tmp_piece != null) {
-				if (!tmp_piece.getClassName().equals(poo.getClassName())) {
+				if (!tmp_piece.getPieceName().equals(poo.getPieceName())) {
 					Move.RIGHT.move();
 					while (Move.point.getX() < board.MAX_X && moveChack(poo, Move.point)) {
 						Move.RIGHT.move();
@@ -92,7 +92,7 @@ public class Poo implements PieceMove {
 			Move.point.set(poo.getPosition());
 			Move.RIGHTDOWN.move();
 			tmp_piece = board.getPiece(Move.point);
-			if (tmp_piece != null && !tmp_piece.getClassName().equals(poo.getClassName())) {
+			if (tmp_piece != null && !tmp_piece.getPieceName().equals(poo.getPieceName())) {
 				Move.RIGHTDOWN.move();
 				moveChack(poo, Move.point);
 			}
@@ -100,7 +100,7 @@ public class Poo implements PieceMove {
 			Move.point.set(poo.getPosition());
 			Move.LEFTDOWN.move();
 			tmp_piece = board.getPiece(Move.point);
-			if (tmp_piece != null && !tmp_piece.getClassName().equals(poo.getClassName())) {
+			if (tmp_piece != null && !tmp_piece.getPieceName().equals(poo.getPieceName())) {
 				Move.LEFTDOWN.move();
 				moveChack(poo, Move.point);
 			}
@@ -108,7 +108,7 @@ public class Poo implements PieceMove {
 			Move.point.set(poo.getPosition());
 			Move.RIGHTUP.move();
 			tmp_piece = board.getPiece(Move.point);
-			if (tmp_piece != null && !tmp_piece.getClassName().equals(poo.getClassName())) {
+			if (tmp_piece != null && !tmp_piece.getPieceName().equals(poo.getPieceName())) {
 				Move.RIGHTUP.move();
 				moveChack(poo, Move.point);
 			}
@@ -116,7 +116,7 @@ public class Poo implements PieceMove {
 			Move.point.set(poo.getPosition());
 			Move.LEFTUP.move();
 			tmp_piece = board.getPiece(Move.point);
-			if (tmp_piece != null && !tmp_piece.getClassName().equals(poo.getClassName())) {
+			if (tmp_piece != null && !tmp_piece.getPieceName().equals(poo.getPieceName())) {
 				Move.LEFTUP.move();
 				moveChack(poo, Move.point);
 			}
@@ -130,7 +130,7 @@ public class Poo implements PieceMove {
 			points.add(p);
 			return true;
 		}
-		if (poo.isTeam(tmp_piece) && !tmp_piece.getClassName().equals(poo.getClassName())) {
+		if (poo.isTeam(tmp_piece) && !tmp_piece.getPieceName().equals(poo.getPieceName())) {
 			points.add(p);
 		}
 		return false;

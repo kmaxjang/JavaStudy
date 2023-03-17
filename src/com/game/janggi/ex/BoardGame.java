@@ -1,19 +1,19 @@
-package com.exproject.janggi;
+package com.game.janggi.ex;
 
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.exproject.janggi.interfacemod.Piece;
-import com.exproject.janggi.interfacemod.Piece.Team;
-import com.exproject.janggi.util.Point;
+import com.game.janggi.ex.interfacemod.Piece;
+import com.game.janggi.ex.interfacemod.Piece.Team;
+import com.game.janggi.ex.util.Point;
 
 public class BoardGame {
 
-  public String background_mark = "🌑";
-  public String movable_mark = "💢";
+  public Piece background_mark = "🌑";
+  public Piece movable_mark = "💢";
 
-  public String[][] board = new String[9][10];
+  public Piece[][] board = new Piece[9][10];
 
   private GameRule gr;
   private Board bd;
@@ -68,7 +68,7 @@ public class BoardGame {
     Iterator<Piece> i = bd.getPieceList();
     while (i.hasNext()) {
       piece = i.next();
-      board[piece.getPosition().getX()][piece.getPosition().getY()] = piece.getClassName().NUMBER;
+      board[piece.getPosition().getX()][piece.getPosition().getY()] = piece.getPieceName().NUMBER;
     }
   }
 
@@ -121,7 +121,7 @@ public class BoardGame {
     
     }
     
-  public static void main(String[] arg) {
+  public static void main(Piece[] arg) {
 
     BoardGame bg = new BoardGame();
     Point pp = new Point(0,6);

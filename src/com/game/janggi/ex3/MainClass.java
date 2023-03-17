@@ -1,8 +1,8 @@
-package com.janggi;
+package com.game.janggi.ex3;
 
 
-import com.janggi.game.Msg;
-import com.janggi.game.Point;
+import com.game.janggi.ex3.game.Msg;
+import com.game.janggi.ex3.game.Point;
 
 public class MainClass {
 

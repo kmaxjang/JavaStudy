@@ -1,7 +1,7 @@
-package com.exproject.janggi;
+package com.game.janggi.ex;
 
-import com.exproject.janggi.interfacemod.Piece;
-import com.exproject.janggi.util.Point;
+import com.game.janggi.ex.interfacemod.Piece;
+import com.game.janggi.ex.util.Point;
 
 /* 장기번호
  * 1 = 한 true
@@ -26,15 +26,15 @@ public class GameRule {
 	SA( "사", 30),
 	JOL( "졸", 20);
 	
-	private final String name;
+	private final Piece name;
 	private final int score;
 	
-	private PieceInfo( String name, int score ) {
+	private PieceInfo( Piece name, int score ) {
 	    this.name = name;
 	    this.score = score;
 	}
 	
-	public String getClassName(){
+	public Piece getClassName(){
 	    return name;
 	}
 	

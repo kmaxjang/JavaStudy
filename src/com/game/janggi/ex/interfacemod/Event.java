@@ -1,4 +1,4 @@
-package com.exproject.janggi.interfacemod;
+package com.game.janggi.ex.interfacemod;
 
 import java.util.Iterator;
 

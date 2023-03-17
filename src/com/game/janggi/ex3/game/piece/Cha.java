@@ -1,13 +1,13 @@
-package com.janggi.game.piece;
+package com.game.janggi.ex3.game.piece;
 
-import com.janggi.game.util.Group;
-import com.janggi.game.util.MovePoints;
-import com.janggi.game.Board;
-import com.janggi.game.Msg;
-import com.janggi.game.Piece;
-import com.janggi.game.Point;
-import com.janggi.game.util.PieceSet;
-import com.janggi.game.util.Piecebuild;
+import com.game.janggi.ex3.game.Board;
+import com.game.janggi.ex3.game.Msg;
+import com.game.janggi.ex3.game.Piece;
+import com.game.janggi.ex3.game.Point;
+import com.game.janggi.ex3.game.util.Group;
+import com.game.janggi.ex3.game.util.MovePoints;
+import com.game.janggi.ex3.game.util.PieceSet;
+import com.game.janggi.ex3.game.util.Piecebuild;
 
 public final class Cha extends Piece implements Piecebuild {
 

@@ -1,10 +1,10 @@
-package com.exproject.janggi.piece;
+package com.game.janggi.ex.piece;
 
 import java.util.Iterator;
 
-import com.exproject.janggi.interfacemod.PieceSet;
-import com.exproject.janggi.util.Move;
-import com.exproject.janggi.util.Point;
+import com.game.janggi.ex.interfacemod.PieceSet;
+import com.game.janggi.ex.util.Move;
+import com.game.janggi.ex.util.Point;
 
 // 장기말 기본정의 Piece인터페이스 구현
 public abstract class Piece implements PieceSet {
@@ -19,21 +19,21 @@ public abstract class Piece implements PieceSet {
 	    Move.LEFT,
 	    Move.LEFTUP
 	};
-	private final Group group;
-	private final Name piecename;
+	private final Team group;
+	private final PieceName piecename;
 
-	public Piece(Group group, Name piecename) {
+	public Piece(Team group, PieceName piecename) {
 		this.group = group;
 		this.piecename = piecename;
 	}
 
 	@Override
-	public Group getGroup() {
+	public Team getTeam() {
 		return group;
 	}
 
 	@Override
-	public Name getName() {
+	public PieceName getName() {
 		return piecename;
 	}
 
@@ -44,17 +44,17 @@ public abstract class Piece implements PieceSet {
 	public abstract Point getOldPosition();
 
 	@Override
-	public abstract Name getKillPiece();
+	public abstract PieceName getKillPiece();
 
 	public abstract Iterator<Point> getMovable();
 
 	public abstract boolean move(Point movepoint);
 
-	public boolean equals(Group group) {
+	public boolean equals(Team group) {
 		return (this.group == group);
 	}
 
-	public boolean equals(Name piece) {
+	public boolean equals(PieceName piece) {
 		return (this.piecename == piece);
 	}
 
@@ -64,7 +64,7 @@ public abstract class Piece implements PieceSet {
 
 	public String toString() {
 		StringBuffer pieceinfo = new StringBuffer();
-		pieceinfo.append(getGroup().number);
+		pieceinfo.append(getTeam().number);
 		pieceinfo.append(getName().number);
 		pieceinfo.append(getPosition().toString());
 		pieceinfo.append(getOldPosition().toString());

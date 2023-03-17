@@ -9,3 +9,12 @@
 /PieceSet.class
 /Play.class
 /TimeRequester.class
+/Piece$PieceName.class
+/Piece$PieceCodeInfo.class
+/Piece$PieceCode.class
+/String$PieceCode.class
+/String$PieceName.class
+/String$Team.class
+/String.class
+/PieceSet$Team.class
+/PieceSet$PieceName.class

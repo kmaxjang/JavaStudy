@@ -1,9 +1,10 @@
 package com.exproject.pattern.thread;
 
-import com.exproject.janggi.interfacemod.Event;
-import com.exproject.janggi.util.Point;
 import com.exproject.pattern.thread.PlayCommand;
 import com.exproject.pattern.thread.ServerNotify;
+import com.game.janggi.ex.interfacemod.Event;
+import com.game.janggi.ex.util.Point;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.exproject.janggi.interfacemod;
+package com.game.janggi.ex.interfacemod;
 
 public interface TimeRequester {
 

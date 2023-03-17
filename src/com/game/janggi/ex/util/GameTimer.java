@@ -1,9 +1,9 @@
-package com.exproject.janggi.util;
+package com.game.janggi.ex.util;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.exproject.janggi.interfacemod.TimeRequester;
+import com.game.janggi.ex.interfacemod.TimeRequester;
 
 public class GameTimer {
 

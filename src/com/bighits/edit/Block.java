@@ -8,7 +8,7 @@ public interface Block<T> {
 
 	public int getEnd();
 
-	public Iterator<T> getBlock();
+	public Iterator<T> get();
 
-	public int blockLength();
+	public int Length();
 }

@@ -1,0 +1,31 @@
+Java 8
+	1. Lambda		
+	2. Stream
+	3. Interface default method
+	4. Optional
+	5. new Data and Time API
+Java 9
+	1. 컬렉션
+	2. 스트림 추가기능
+	3. optional
+	4. 인터페이스 private method
+Java 10
+	1. var 키워드
+	2. 병렬 처리 가비지 컬렉션 도입으로 인한 성능 향상
+	3. JVM 힙 영역을 시스템 메모리가 아닌 다른 종류의 메모리에도 할당가능
+Java 11
+	1. lambda 지역변수 사용법 변경
+Java 12
+	1. 스위치 표현식(preview) 추가
+Java 13
+Java 14
+Java 15
+	1. Text-Blocks / Multiline Strings
+	2. Records & Pattern Matching(2차 preview, 상단 Java 14 참조)
+	3. 스케일링 가능한 낮은 지연의 가비지 컬렉터 추가(ZGC)
+	4. 레코드 (2차 preview, 상단 Java 14 참조)
+	5. Sealed Classes - Preview
+	6. Nashorn JavaScript Engine 제거
+
+		
+	

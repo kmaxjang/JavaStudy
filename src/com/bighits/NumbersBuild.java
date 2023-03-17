@@ -1,133 +1,133 @@
 package com.bighits;
 
-public class Numbers {
+public class NumbersBuild {
+// 번호 조건 1~45사이 6섯자리 번호
+	public final static int min = 1;
+	public final static int max = 45;
+	public final static int length = 5;
 
-	private final int min = 1;
-	private final int max = 45;
-	private final int length = 6;
-	private int[] numbers = new int[length];
+	private int[] numbers = new int[length + 1];
+	private int count = -1; // 현재 등록 번호수	
 
-	private int limet = -1;
-	private final boolean uplist = false;
-	private int up = -1, down = 1;
-	{
-		if (uplist) {
-			up = 1;
-			down = -1;
-		}
+	
+	 // 번호범위
+	public boolean isRange(int number) {
+		return (min <= number && max >= number) ? true : false;
+	}
+	
+	// 입력가능여부
+	public boolean isLimet() { 
+		return (count < length) ? true : false;
 	}
 
-	public void setNumber(int number[]) {
+	public boolean set(int numbers[]) {
 		if (!isLimet()) {
-			return;
+			return false;
 		}
-		for (int i = 0; i < number.length; i++) {
-			setNumber(number[i]);
+		for (int i = 0; i < numbers.length; i++) {
+			set(numbers[i]);
 		}
+		return true;
 	}
 
-	public void setNumber(int number) {
+	public boolean set(int number) {
 		if (!isLimet() || !isRange(number)) {
-			return; // 유효성검사
+			return false; // 유효성검사
 		}
-		if (-1 == limet) { // 등록번호 없을때
-			limet++;
+		if (-1 == count) { // 등록번호 없을때
+			count++;
 			numbers[0] = number;
 		} else {
 			int tmp = 0;
-			for (int c = limet; c >= 0; c--) {
-				tmp = compare(numbers[c], number);
+			for (int c = count; c >= 0; c--) {
+				tmp = compare(numbers[c], number);				
+				if(tmp != 0) {
+					// 오름차순 내림차순
+					tmp = (1 < tmp)? 1: -1;
+				}
 				switch (tmp) {
 				case 0:
-					return; // 번호중복
-				case -1:
+					return false; // 번호중복
+				case 1:
 					if (c != 0) {
 						break;
 					} // 마지막 자리까지 중복 없을때 아래실행
-				case 1:
+				case -1:
 					if (tmp == 1) {
 						c += 1;
 					}
-					limet++;
-					for (tmp = limet; tmp > c; tmp--) {
+					count++;
+					for (tmp = count; tmp > c; tmp--) {
 						numbers[tmp] = numbers[tmp - 1];
 					}
 					numbers[c] = number;
-					return;
+					return true;
 				}
 			}
-		}
+		}		
+		return true;
 	}
 
-	public void deleteNumber() {
-		limet = -1;
+	public void delete() {
+		count = -1;
 	}
 
-	public void deleteNumber(int number) {
-		for (int c = limet; c >= 0; c--) {
+	public boolean delete(int number) {
+		for (int c = count; c >= 0; c--) {
 			if (numbers[c] == number) {
-				for (int dp = c; dp < limet; dp++) {
+				for (int dp = c; dp < count; dp++) {
 					numbers[dp] = numbers[dp + 1];
 				}
-				limet--;
-				return;
+				count--;
+				return true;
 			}
 		}
+		return false;
 	}
 
-	public void changeNumber(int delete, int number) {
-		if (0 > delete || limet < delete)
-			return;
-
-		for (int dp = delete; dp < limet; dp++) {
+	public boolean change(int deletepoint, int number) {		
+		if (0 > count || 0 > deletepoint || deletepoint > count) {
+			return false;
+		}
+		for (int dp = deletepoint; dp < count; dp++) {
 			numbers[dp] = numbers[dp + 1];
 		}
-		limet--;
-		setNumber(number);
+		count--;
+		return set(number);
 	}
 
-	public int getLimet() {
-		return limet + 1;
+	public int getCount() {
+		return count + 1;
 	}
 
-	public int[] getNumbers() {
-		if (-1 >= limet)
+	public int[] get() {
+		if (-1 >= count)
 			return null;
-		int[] copy = new int[limet + 1];
-		System.arraycopy(numbers, 0, copy, 0, limet + 1);
+		int[] copy = new int[count + 1];
+		System.arraycopy(numbers, 0, copy, 0, count + 1);
 		return copy;
 	}
 
-	public int getNumbers(int point) {
-		return (-1 != limet && limet <= point && 0 <= point) ? numbers[point] : null;
+	public int get(int point) {
+		return (-1 != count && count <= point && 0 <= point) ? numbers[point] : null;
 	}
 
-	public boolean isLimet() {
-		return (limet < length - 1) ? true : false;
+	public int compare(int number1, int number2) {		
+		return number1 - number2;
 	}
-
-	public boolean isRange(int number) {
-		return (number <= max && number >= min) ? true : false;
-	}
-
-	public int compare(int number, int number2) {
-		if (number == number2) {
-			return 0;
-		}
-		// 오름차순 내림차순
-		return (number > number2) ? up : down;
-	}
-
-	public void change(long number) {
+	
+	 // 긴번호로 입력
+	public void set(long number) {
 		while (number != 0) {
-			setNumber((int) (number % 100));
+			set((int) (number % 100));
 			number = number / 100;
 		}
 	}
-
-	public long change() {
+	
+	// 한번호로 출력
+	public long get(int numbers[]) { 
 		long number = 0;
-		for (int p = 0; p <= limet; p++) {
+		for (int p = 0; p <= numbers.length; p++) {
 			number = (number * 100) + numbers[p];
 		}
 		return number;

@@ -31,7 +31,6 @@ public class Time {
 					} catch (Exception e) {
 
 					}
-
 				}
 				run = false;
 				System.out.println("루프종료");
@@ -84,8 +83,7 @@ public class Time {
 		return addbool;
 	}
 
-	public Iterator<Info> iterator() {
-		Iterator<? extends Influence> it = list.iterator();
-		return (Iterator<Info>) it;
+	public Iterator<Influence> iterator() {		
+		return list.iterator();
 	}
 }
