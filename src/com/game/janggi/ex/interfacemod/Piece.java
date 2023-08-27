@@ -9,21 +9,13 @@ public interface Piece {
     public enum PieceCode {
 	TEAM(0), //
 	PIECE_NAME(1), //
-	_X(2), //
-	_Y(3), //
-	OLD_X(4), //
-	OLD_Y(5), //
-	KILL_PIECE(6);
+	POINT(2); //
 	
-	private int code;
+	public final int CODE;
 	
 	private PieceCode(int code) {
-	    this.code = code;
-	}
-	
-	public int get() {
-	    return code;
-	}
+	    this.CODE = code;
+	}	
     };
 
     public enum Team {
@@ -74,25 +66,17 @@ public interface Piece {
 	}
     }
 
-    public PieceName getPieceName(); // 장기말 이름 왕 차 포 마 상 쫄(병) 사
+    public PieceName getName(); // 장기말 이름 왕 차 포 마 상 쫄(병) 사
 
     public Team getTeam(); // 초 한
     
     public Point getPosition(); // 현재위치
     
-    public Point getOldPosition(); // 전 위치
-    
-    public PieceName getKillName(); // 잡은말
+    public boolean isTeam(); // 장기 편 true= 한 false= 초
 
-    public boolean isTeam(Piece piece); // 장기 편 true= 한 false= 초
-
-    public Piece info(); // 문자정보 7자리
-
-    public int infoCommand(); // 7자리 정보
+    public int info(); // 문자정보 7자리
 
     public int parseInt(PieceCode p); // 7자리 개별정수
-
-    public Piece parse(PieceCode p); // 7자리 개별문자
 
     public boolean move(Point move, Piece killclass); // 이동
 

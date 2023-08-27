@@ -1,6 +1,8 @@
 package com.screen;
 
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.Random;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -8,70 +10,84 @@ import java.util.stream.IntStream;
 public class MainScreen {
 
     // 4k
-    private final int x = 1920;
-    private final int y = 1080;
-    private int[][] screen = new int[x][y];
-    private int wall_mark = 9;
-    private int space_mark = 0;
+    private final int WIDTH = 40;
+    private final int LENGTH = 30;
+    private String[][] screen_data = new String[WIDTH][LENGTH];
 
-    private StringBuffer view = new StringBuffer(x * (y+2));
+    private final String wall_mark = "■";
+    private final String space_mark = "□";
+    private final String[] worm_head = {"▲","◀","▼","▶"};
+    private final String bady_mark = "▣";
+    private final String[] worm_tail = {"∪","⊃","⊂","∩"};
+    private LinkedHashMap<Integer,String> worm_bady = new LinkedHashMap<>();
+    
+    private StringBuffer view_buffer = new StringBuffer(WIDTH * (LENGTH + 2));
 
     public MainScreen() {
 	reset();
+	
     }
 
-    public void drow() {	
+    private int way = 0;
+    private int move =15;
+    public void worm() {
+	if(move > 1) {
+	    move--;
+	}
+	screen_data[20][move] = worm_head[way];
+	screen_data[21][move] = bady_mark;
+	screen_data[22][move] = worm_tail[way];
+    }
+    
+    public void drow() {
 	screen();
+	worm();
     }
 
     public void reset() {
-	for (int x = 0; x < screen.length; x++) {
-	    for (int y = 0; y < screen[x].length; y++) {
-		if (x == 0 || y == 0 || x == screen.length - 1 || y == screen[screen.length - 1].length - 1) {
-		    screen[x][y] = wall_mark;		    
+	for (int x = 0; x < WIDTH; x++) {
+	    for (int y = 0; y < LENGTH; y++) {
+		if (x == 0 || y == 0 || x == WIDTH - 1 || y == LENGTH - 1) {
+		    screen_data[x][y] = wall_mark;
 		} else {
-		    screen[x][y] = space_mark;
+		    screen_data[x][y] = space_mark;
 		}
 	    }
 	}
     }
 
-//    	screen[0][0] screen[1][0] screen[2][0]	    
-//    		screen[0][1] screen[1][1] screen[2][1]
-//    			screen[0][2] screen[1][2] screen[2][2]
-
     public void screen() {
-	view.delete(0, view.length());
-	for (int x = 0; x < screen.length; x++) {
-	    for (int y = 0; y < screen[x].length; y++) {
-		view.append(screen[x][y]);
+	view_buffer.delete(0, view_buffer.length());
+	for (int x = 0; x < screen_data.length; x++) {
+	    for (String data :screen_data[x]) {
+		view_buffer.append(data);
 	    }
-	    view.append("\n");
+	    view_buffer.append("\n");
 	}
-	System.out.println(view.length());
+//	System.out.print("\033[H\033[2J");
+//      System.out.flush();       
+	System.out.println(view_buffer);	
     }
 
     public static void main(String[] args) {
-//	MainScreen ms = new MainScreen();
-//
-//	int count = 0;
-//	long sleep = 0;
-//	while (count < 10000) {
-//	    sleep = System.currentTimeMillis();
-//	    ms.drow();
-//	    sleep = System.currentTimeMillis() - sleep;
-//	    System.out.println("Count "+ count+ " Time "+sleep);
-//	    count++;	    
-//	}
-	
+	MainScreen ms = new MainScreen();
+
+	int count = 0;
+	long sleep = 0;
+	while (count < 100000) {
+	    sleep = System.currentTimeMillis();
+	    ms.drow();
+	    sleep = System.currentTimeMillis() - sleep;
+	    System.out.println("Count " + count + " Time " + sleep);
+	    count++;
+	}
+
 	Random random = new Random();
-        Set<Integer> uniqueNumbers = new HashSet<>();
-        
-        IntStream.iterate(1, i -> i + 1)
-                 .filter(i -> uniqueNumbers.size() < 100)
-                 .limit(100)
-                 .forEach(i -> uniqueNumbers.add(random.nextInt(100) + 1));
-        
-        System.out.println("Unique random numbers: " + uniqueNumbers);
+	Set<Integer> uniqueNumbers = new HashSet<>();
+
+	IntStream.iterate(1, i -> i + 1).filter(i -> uniqueNumbers.size() < 100).limit(100)
+		.forEach(i -> uniqueNumbers.add(random.nextInt(100) + 1));
+
+	System.out.println("Unique random numbers: " + uniqueNumbers);
     }
 }

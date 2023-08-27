@@ -4,7 +4,6 @@ import java.util.Iterator;
 
 import com.game.janggi.ex.Board;
 import com.game.janggi.ex.interfacemod.Piece;
-import com.game.janggi.ex.interfacemod.Piece.PieceCodeInfo;
 import com.game.janggi.ex.util.Point;
 
 public class Displays {
@@ -16,8 +15,8 @@ public class Displays {
   private int[][] board = new int[maxx][maxy];
   private boolean[][] mark_check = new boolean[maxx][maxy];
 
-  private Piece mark_space = "⬛";
-  private Piece mark_choice = "⭕";
+  private String mark_space = "⬛";
+  private String mark_choice = "⭕";
 
   private Board exboard = new Board();
 
@@ -55,7 +54,7 @@ public class Displays {
     System.out.println(mark);
   }
 
-  public Piece getPiece(int piece) {
+  public String getPiece(int piece) {
     switch (piece) {
       case 11:
         return "🦁";
@@ -107,8 +106,7 @@ public class Displays {
   public void m() {
     Iterator<Piece> list = exboard.getPieceList();
     while (list.hasNext()) {
-      Piece piece = list.next();
-      setPiece(piece.getPosition(), piece.parseInt(PieceCodeInfo.TEAM) * 10 + piece.parseInt(PieceCodeInfo.CLASS));
+      Piece piece = list.next();      
     }
   }
 
