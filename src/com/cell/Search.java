@@ -1,4 +1,4 @@
-package com.ex3;
+package com.cell;
 
 import java.util.Random;
 
@@ -22,28 +22,27 @@ public class Search {
 
   // 정렬된 배열 절반씩 검색
   public int search(int[] data, int search) {
-    int s = 0;
-    int e = data.length;
-    int m = 0;
-    while (s != e) {
-      m = (s + e) / 2;
-      if (search == data[m]) {
-        return m;
+    int start = 0;
+    int end = data.length;
+    int index = 0;
+    while (start != end) {
+      index = (start + end) / 2;
+      if (search == data[index]) {
+        return index;
       }
-      if (search < data[m]) {
-        e = m;
+      if (search < data[index]) {
+        end = index;
       } else {
-        s = m + 1;
+        start = index + 1;
       }
     }
     return -1;
   }
+
   // 정렬된 배열 델타평균으로 검색
   public int search(int[] data, long search) {
-
     int low = 0;
     int high = data.length - 1;
-
     long dlta;
     int mid;
     while (data[low] < search && data[high] > search) {
@@ -82,11 +81,13 @@ public class Search {
     s.timer();
     int p = s.search(data, data[10000]);
     s.timer();
-    if (p != -1) System.out.println("찾는수 위치 data[" + p + "]=" + data[p]);
+    if (p != -1)
+      System.out.println("찾는수 위치 data[" + p + "]=" + data[p]);
 
     s.timer();
     p = s.search(data, (long) data[10000]);
     s.timer();
-    if (p != -1) System.out.println("찾는수 위치 data[" + p + "]=" + data[p]);
+    if (p != -1)
+      System.out.println("찾는수 위치 data[" + p + "]=" + data[p]);
   }
 }
