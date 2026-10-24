@@ -1,2 +1,23 @@
+# Java compiler output
+*.class
 /bin/
-/**/*.class
+/out/
+/build/
+/target/
+
+# Temporary files and logs
+*.tmp
+*.temp
+*.log
+hs_err_pid*
+*.swp
+*~
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Local IDE/workspace state (keep shared project configuration)
+.metadata/
+.idea/workspace.xml
