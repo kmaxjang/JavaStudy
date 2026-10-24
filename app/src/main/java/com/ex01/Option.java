@@ -1,0 +1,19 @@
+package com.ex01;
+
+public interface Option {
+/*
+HAN_CODE
+CHO_CODE
+
+KING_CODE
+CHA_CODE
+POO_CODE
+MA_CODE
+SANG_CODE
+SA_CODE
+JOL_CODE
+
+BOARD_X_SIZE
+BOARD_Y_SIZE
+*/
+}
