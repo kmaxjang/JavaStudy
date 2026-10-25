@@ -10,10 +10,10 @@ import com.game.janggi.ex.util.Point;
 
 public class BoardGame {
 
-  public Piece background_mark = "🌑";
-  public Piece movable_mark = "💢";
+  public String background_mark = "🌑";
+  public String movable_mark = "💢";
 
-  public Piece[][] board = new Piece[9][10];
+  public String[][] board = new String[9][10];
 
   private GameRule gr;
   private Board bd;
@@ -68,7 +68,7 @@ public class BoardGame {
     Iterator<Piece> i = bd.getPieceList();
     while (i.hasNext()) {
       piece = i.next();
-      board[piece.getPosition().getX()][piece.getPosition().getY()] = piece.getPieceName().NUMBER;
+      board[piece.getPosition().x][piece.getPosition().y] = piece.getPieceName().NUMBER;
     }
   }
 
@@ -77,7 +77,7 @@ public class BoardGame {
     Iterator<Point> i = bd.movable(piece);
     while (i.hasNext()) {
       p = i.next();
-      board[p.getX()][p.getY()] = movable_mark;
+      board[p.x][p.y] = movable_mark;
     }
   }
 
@@ -124,35 +124,35 @@ public class BoardGame {
   public static void main(Piece[] arg) {
 
     BoardGame bg = new BoardGame();
-    Point pp = new Point(0,6);
+    Point pp = Point.in(0,6);
 
     bg.play(pp);
-    pp.set(1,6);
+    pp = Point.in(1,6);
     bg.play(pp);
 
-    pp.set(0,3);
+    pp = Point.in(0,3);
     bg.play(pp);
-    pp.set(1,3);
+    pp = Point.in(1,3);
     bg.play(pp);
 
-    pp.set(0,9);
+    pp = Point.in(0,9);
     bg.play(pp);
-    pp.set(0,0);
+    pp = Point.in(0,0);
     bg.play(pp);
     
-    pp.set(1,2);
+    pp = Point.in(1,2);
     bg.play(pp);
-    pp.set(1,6);
+    pp = Point.in(1,6);
     bg.play(pp);
     
-    pp.set(0,3);
+    pp = Point.in(0,3);
     bg.play(pp);
-    pp.set(1,3);
+    pp = Point.in(1,3);
     bg.play(pp);  
     
-    pp.set(0,0);
+    pp = Point.in(0,0);
     bg.play(pp);
-    pp.set(0,1);
+    pp = Point.in(0,1);
     bg.play(pp);
     
 

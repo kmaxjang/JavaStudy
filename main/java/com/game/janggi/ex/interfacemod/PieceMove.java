@@ -7,5 +7,5 @@ import com.game.janggi.ex.util.Point;
 
 public interface PieceMove {
 
-  public Iterator<Point> moveable(Board board, Piece piece);
+  public Iterator<Point> moveable(Board board);
 }

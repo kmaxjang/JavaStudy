@@ -4,66 +4,53 @@ package com.game.janggi.ex.util;
 
 public class Point {
 
-    public int x;
-    public int y;
+  private static Point[] pointlist = new Point[9 * 10];
 
-    public static int count = 0; // 임시 생성자 갯수 카운터 체크
-    public boolean chack = true; // 이동가능 체크
-
-    public Point() {
-	this(0, 0);
+  {
+    for (int code = 0; code < (9 * 10); code++) {
+      pointlist[code] = new Point(code);
     }
+  }
 
-    public Point(int x, int y) {
-	this.x = x;
-	this.y = y;
-	count++;
-    }
+  public final int x;
+  public final int y;
+  public final int code;
 
-    public void set(Point p) {
-	set(p.x, p.y);
-    }
+  private Point(int code) {
+    x = code / 10;
+    y = code % 10;
+    this.code = code;
+  }
 
-    public void set(int x, int y) {
-	this.x = x;
-	this.y = y;
-    }
+  public static Point in(int code) {
+    return pointlist[code];
+  }
 
-    public void setX(int x) {
-	this.x = x;
-    }
+  public static Point in(int x, int y) {
+    return pointlist[(y * 10) + x];
+  }
 
-    public void setY(int y) {
-	this.y = y;
-    }
+  public int x() {
+    return x;
+  }
 
-    public void set(String number) {
-	char[] num = number.toCharArray();
-	x = num[0];
-	y = num[1];
-    }
+  public int y() {
+    return y;
+  }
 
-    public Point get() {
-	return this;
-    }
+  public int code() {
+    return code;
+  }
 
-    public int getX() {
-	return x;
-    }
+  public boolean equals(Point p) {
+    return this == p;
+  }
 
-    public int getY() {
-	return y;
-    }
+  public boolean equals(int x, int y) {
+    return (this.x == x && this.y == y);
+  }
 
-    public boolean equals(Point p) {
-	return equals(p.x, p.y);
-    }
-
-    public boolean equals(int x, int y) {
-	return (this.x == x && this.y == y);
-    }
-
-    public String toString() {
-	return String.format("%d%d", x, y);
-    }
+  public String toString() {
+    return String.format("%d%d", x, y);
+  }
 }

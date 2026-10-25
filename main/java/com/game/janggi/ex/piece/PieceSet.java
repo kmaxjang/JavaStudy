@@ -43,7 +43,7 @@ public class PieceSet implements Piece {
   }
 
   @Override
-  public PieceName getPieceName() {    
+  public PieceName getName() {    
     return PieceName.get(parseInt(PieceCode.PIECE_NAME));
   }
 
