@@ -20,9 +20,18 @@ public class Ma implements PieceMove {
 	/*
 	 * null = 기록 다른편일땄1�7 = 기록 장군을1�7 아닐땄1�7= 기록
 	 */
-	public Iterator<Point> moveable(Board b, Piece ma) {
+	public Iterator<Point> moveable(Board b) {
 		this.board = b;
 		points.clear();
+		
+		Point sp = ma.position();
+		
+		Move move = Move.loop[];
+	 {-1,-2},{1,-2}{0,-1}
+	 {2,-1}{2,1}{1,0}
+	 {1,2}{-1,2}{0,1}
+	 {-2,1}{-2,-1}{-1,-1}
+	
 		Move.point.set(ma.getPosition());
 		Move.UP.move();
 		Move.UP.move();

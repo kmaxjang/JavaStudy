@@ -17,7 +17,7 @@ import com.game.janggi.ex.util.Point;
 
 public class Board {
 
-  private Point tmp = new Point(0, 0);
+  private Point tmp = Point.in(0, 0);
   // 장기말 목록
   private ArrayList<Piece> piece_list = new ArrayList<Piece>();
   private ArrayList<Piece> orderlist = new ArrayList<Piece>();
@@ -28,27 +28,19 @@ public class Board {
   public final int MAX_Y = 10;
   // 한 궁좌표
   public final Point[] castleup = {
-    new Point(3, 0),
-    new Point(4, 0),
-    new Point(5, 0),
-    new Point(3, 1),
-    new Point(4, 1),
-    new Point(5, 1),
-    new Point(3, 2),
-    new Point(4, 2),
-    new Point(5, 2),
+    Point.in(3, 0), //RIGHTDOWN    
+    Point.in(5, 0), //LEFTDOWN
+    Point.in(5, 2), //LEFTUP   
+    Point.in(3, 2), //RIGHTUP
+    Point.in(4, 1) //CENTER
   };
   // 초 궁좌표
   public final Point[] castledown = {
-    new Point(3, 7),
-    new Point(4, 7),
-    new Point(5, 7),
-    new Point(3, 8),
-    new Point(4, 8),
-    new Point(5, 8),
-    new Point(3, 9),
-    new Point(4, 9),
-    new Point(5, 9),
+    Point.in(3, 7), //RIGHTDOWN
+    Point.in(5, 7), //LEFTDOWN
+    Point.in(5, 9), //LEFTUP
+    Point.in(3, 9), //RIGHTUP
+    Point.in(4, 8) //CENTER
   };
   private PieceMove pm = null;
   

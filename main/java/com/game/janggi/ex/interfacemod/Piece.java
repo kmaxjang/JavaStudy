@@ -7,7 +7,7 @@ import com.game.janggi.ex.util.Point;
 public interface Piece {
 
   public enum PieceCode {
-    TEAM(0), //
+    GROUP(0), //
     PIECE_NAME(1), //
     POINT(2); //
 
@@ -18,9 +18,9 @@ public interface Piece {
     }
   };
 
-  public enum Team {
-    CHO(10), //
-    HAN(20);
+  public enum Group {
+    CHO(1), //
+    HAN(2);
 
     public final int CODE;
 
@@ -28,7 +28,7 @@ public interface Piece {
       CODE = code;
     }
 
-    public static Team get(int code) {
+    public static Group get(int code) {
       switch (code) {
         case 1:
           return CHO;
@@ -39,7 +39,7 @@ public interface Piece {
     }
   }
 
-  public enum PieceName {
+  public enum Types {
     KING(1), //
     JOL(2), //
     SA(3), //
@@ -50,11 +50,11 @@ public interface Piece {
 
     public final int CODE;
 
-    private PieceName(int code) {
+    private Types(int code) {
       CODE = code;
     }
 
-    public static PieceName get(int code) {
+    public static Types get(int code) {
       switch (code) {
         case 1:
           return KING;
@@ -75,13 +75,13 @@ public interface Piece {
     }
   }
 
-  public PieceName getName(); // 장기말 이름 왕 차 포 마 상 쫄(병) 사
+  public Types types(); // 장기말 이름 왕 차 포 마 상 쫄(병) 사
 
-  public Team getTeam(); // 초 한
+  public Team group(); // 초 한
 
-  public Point getPosition(); // 현재위치
+  public Point position(); // 현재위치
 
-  public boolean isTeam(); // 장기 편 true= 한 false= 초
+  public boolean isGroup(); // 장기 편 true= 한 false= 초
 
   public int info(); // 문자정보 7자리
 

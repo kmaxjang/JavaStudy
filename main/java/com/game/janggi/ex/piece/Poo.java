@@ -21,105 +21,45 @@ public class Poo implements PieceMove {
 	/*
 	 * null = 기록 다른편일땄1�7 = 기록 장군을1�7 아닐땄1�7= 기록
 	 */
-	public Iterator<Point> moveable(Board b, Piece poo) {
+	public Iterator<Point> moveable(Board b) {
 		this.board = b;
 		points.clear();
-		Move.point.set(poo.getPosition());
-		Move.UP.move();
-		while (Move.point.getY() > 0) {
-			tmp_piece = board.getPiece(Move.point);
-			if (tmp_piece != null) {
-				if (!tmp_piece.getPieceName().equals(poo.getPieceName())) {
-					Move.UP.move();
-					while (Move.point.getY() > board.MIN_Y && moveChack(poo, Move.point)) {
-						Move.UP.move();
-					}
-				}
-				break;
-			} else {
-				Move.UP.move();
+		
+		final Point sp = poo.position();
+		for(int loop = 0; loop <loop.length; loop++) {
+		  Point tmp = sp;
+		  Move move = Move.loop[loop];
+		  while (move.scope(tmp)) {
+		    tmp = move.go(tmp);		    
+            tmp_piece = board.getPiece(tmp);
+            if (tmp_piece != null && tmp_piece.types() != Piece.Types.POO) {
+              while(move.scope(tmp) && moveChack(poo, tmp = move.go(tmp))){                
+              }
+               break;
+            }
+           }
+		  }
+		
+		if (sp.equals(board.castleup[0]) || sp.equals(board.castledown[0])) {			
+			tmp_piece = board.getPiece(tmp=Move.RIGHTDOWN.go(sp));
+			if (tmp_piece != null && tmp_piece.types()!= PieceTypes.POO)) {				
+				moveChack(poo, Move.RIGHTDOWN.go(tmp));
 			}
-		}
-		Move.point.set(poo.getPosition());
-		Move.DOWN.move();
-		while (Move.point.getY() < board.MAX_Y - 1) {
-			tmp_piece = board.getPiece(Move.point);
-			if (tmp_piece != null) {
-				if (!tmp_piece.getPieceName().equals(poo.getPieceName())) {
-					Move.DOWN.move();
-					while (Move.point.getY() < board.MAX_Y && moveChack(poo, Move.point)) {
-						Move.DOWN.move();
-					}
-				}
-				break;
-			} else {
-				Move.DOWN.move();
-			}
-		}
-		Move.point.set(poo.getPosition());
-		Move.LEFT.move();
-		while (Move.point.getX() > 0) {
-			tmp_piece = board.getPiece(Move.point);
-			if (tmp_piece != null) {
-				if (!tmp_piece.getPieceName().equals(poo.getPieceName())) {
-					Move.LEFT.move();
-					while (Move.point.getX() >= board.MIN_X && moveChack(poo, Move.point)) {
-						Move.LEFT.move();
-					}
-				}
-				break;
-			} else {
-				Move.LEFT.move();
-			}
-		}
-		Move.point.set(poo.getPosition());
-		Move.RIGHT.move();
-		while (Move.point.getX() < board.MAX_X - 1) {
-			tmp_piece = board.getPiece(Move.point);
-			if (tmp_piece != null) {
-				if (!tmp_piece.getPieceName().equals(poo.getPieceName())) {
-					Move.RIGHT.move();
-					while (Move.point.getX() < board.MAX_X && moveChack(poo, Move.point)) {
-						Move.RIGHT.move();
-					}
-				}
-				break;
-			} else {
-				Move.RIGHT.move();
-			}
-		}
-		if (poo.getPosition().equals(board.castleup[0]) || poo.getPosition().equals(board.castledown[0])) {
-			Move.point.set(poo.getPosition());
-			Move.RIGHTDOWN.move();
-			tmp_piece = board.getPiece(Move.point);
-			if (tmp_piece != null && !tmp_piece.getPieceName().equals(poo.getPieceName())) {
-				Move.RIGHTDOWN.move();
-				moveChack(poo, Move.point);
-			}
-		} else if (poo.getPosition().equals(board.castleup[2]) || poo.getPosition().equals(board.castledown[2])) {
-			Move.point.set(poo.getPosition());
-			Move.LEFTDOWN.move();
-			tmp_piece = board.getPiece(Move.point);
-			if (tmp_piece != null && !tmp_piece.getPieceName().equals(poo.getPieceName())) {
-				Move.LEFTDOWN.move();
-				moveChack(poo, Move.point);
-			}
-		} else if (poo.getPosition().equals(board.castleup[6]) || poo.getPosition().equals(board.castledown[6])) {
-			Move.point.set(poo.getPosition());
-			Move.RIGHTUP.move();
-			tmp_piece = board.getPiece(Move.point);
-			if (tmp_piece != null && !tmp_piece.getPieceName().equals(poo.getPieceName())) {
-				Move.RIGHTUP.move();
-				moveChack(poo, Move.point);
-			}
-		} else if (poo.getPosition().equals(board.castleup[8]) || poo.getPosition().equals(board.castledown[8])) {
-			Move.point.set(poo.getPosition());
-			Move.LEFTUP.move();
-			tmp_piece = board.getPiece(Move.point);
-			if (tmp_piece != null && !tmp_piece.getPieceName().equals(poo.getPieceName())) {
-				Move.LEFTUP.move();
-				moveChack(poo, Move.point);
-			}
+		} else if (sp.equals(board.castleup[1]) || sp.equals(board.castledown[1])) {
+		  tmp_piece = board.getPiece(tmp=Move.LEFTDOWN.go(sp));
+          if (tmp_piece != null && tmp_piece.types()!= PieceTypes.POO)) {             
+              moveChack(poo, Move.LEFTDOWN.go(tmp));
+          }
+		} else if (sp.equals(board.castleup[2]) || sp.equals(board.castledown[2])) {
+		  tmp_piece = board.getPiece(tmp=Move.RIGHTUP.go(sp));
+          if (tmp_piece != null && tmp_piece.types()!= PieceTypes.POO)) {             
+              moveChack(poo, Move.RIGHTUP.go(tmp));
+          }
+		} else if (sp.equals(board.castleup[3]) || sp.equals(board.castledown[3])) {
+		  tmp_piece = board.getPiece(tmp=Move.RIGHTUP.go(sp));
+          if (tmp_piece != null && tmp_piece.types()!= PieceTypes.POO)) {             
+              moveChack(poo, Move.RIGHTUP.go(tmp));
+          }
 		}
 		return points.getMovable();
 	}
@@ -127,10 +67,11 @@ public class Poo implements PieceMove {
 	private boolean moveChack(Piece poo, Point p) {
 		tmp_piece = board.getPiece(p);
 		if (tmp_piece == null) {
+		  //빈공간
 			points.add(p);
 			return true;
 		}
-		if (poo.isTeam(tmp_piece) && !tmp_piece.getPieceName().equals(poo.getPieceName())) {
+		if (!poo.isGroup(tmp_piece) && tmp_piece.types() != Piece.Types.POO)) {
 			points.add(p);
 		}
 		return false;

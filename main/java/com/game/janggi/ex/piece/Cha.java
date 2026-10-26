@@ -23,84 +23,50 @@ public class Cha implements PieceMove {
   public Iterator<Point> moveable(Board b) {
     this.board = b;
     points.clear();
-    Move.point.set(cha.getPosition());
-    Move.UP.move();
-    while (Move.point.getY() >= board.MIN_Y && moveChack(cha, Move.point)) {
-      Move.UP.move();
-    }
-    Move.point.set(cha.getPosition());
-    Move.DOWN.move();
-    while (Move.point.getY() < board.MAX_Y && moveChack(cha, Move.point)) {
-      Move.DOWN.move();
-    }
-    Move.point.set(cha.getPosition());
-    Move.LEFT.move();
-    while (Move.point.getX() >= board.MIN_X && moveChack(cha, Move.point)) {
-      Move.LEFT.move();
-    }
-    Move.point.set(cha.getPosition());
-    Move.RIGHT.move();
-    while (Move.point.getX() < board.MAX_X && moveChack(cha, Move.point)) {
-      Move.RIGHT.move();
-    }
-
-    if (cha.getPosition().equals(board.castleup[0])
-        || cha.getPosition().equals(board.castledown[0])) {
-      Move.point.set(cha.getPosition());
-      Move.RIGHT.move();
-      if (moveChack(cha, Move.point)) {
-        Move.RIGHT.move();
-        moveChack(cha, Move.point);
-      }
-    } else if (cha.getPosition().equals(board.castleup[2])
-        || cha.getPosition().equals(board.castledown[2])) {
-      Move.point.set(cha.getPosition());
-      Move.LEFT.move();
-      if (moveChack(cha, Move.point)) {
-        Move.LEFT.move();
-        moveChack(cha, Move.point);
-      }
-    } else if (cha.getPosition().equals(board.castleup[4])
-        || cha.getPosition().equals(board.castledown[4])) {
-      Move.point.set(cha.getPosition());
-      Move.LEFTUP.move();
-      moveChack(cha, Move.point);
-      Move.point.set(cha.getPosition());
-      Move.RIGHTUP.move();
-      moveChack(cha, Move.point);
-      Move.point.set(cha.getPosition());
-      Move.LEFTDOWN.move();
-      moveChack(cha, Move.point);
-      Move.point.set(cha.getPosition());
-      Move.RIGHTDOWN.move();
-      moveChack(cha, Move.point);
-    } else if (cha.getPosition().equals(board.castleup[6])
-        || cha.getPosition().equals(board.castledown[6])) {
-      Move.point.set(cha.getPosition());
-      Move.RIGHTUP.move();
-      if (moveChack(cha, Move.point)) {
-        Move.RIGHTUP.move();
-        moveChack(cha, Move.point);
-      }
-    } else if (cha.getPosition().equals(board.castleup[8])
-        || cha.getPosition().equals(board.castledown[8])) {
-      Move.point.set(cha.getPosition());
-      Move.LEFTUP.move();
-      if (moveChack(cha, Move.point)) {
-        Move.LEFTUP.move();
-        moveChack(cha, Move.point);
+    
+    final Point sp = cha.position();
+    for(int loop = 0; loop <loop.length ; loop++) {
+      Point tmp = sp;
+      Move move= Move.loop[loop];
+      while (move.scope(tmp) && moveChack(cha, move.go(tmp))) {
+        tmp = move.go(tmp);
       }
     }
+    
+    if (sp.equals(board.castleup[0]) || sp.equals(board.castledown[0])) {      
+      if (moveChack(cha, tmp = Move.RIGHT.go(sp))) {        
+        moveChack(cha, MoveRIGHT.go(tmp);
+      }
+    } else if (sp.equals(board.castleup[1]) || sp.equals(board.castledown[1])) {
+      if (moveChack(cha, tmp = Move.LEFT.go(sp))) {        
+        moveChack(cha, MoveLEFT.go(tmp);
+      }
+    } else if (sp.equals(board.castleup[2]) || sp.equals(board.castledown[2])) {
+      if (moveChack(cha, tmp = Move.RIGHTUP.go(sp))) {        
+        moveChack(cha, RIGHTUP.go(tmp);
+      }
+    } else if (sp.equals(board.castleup[3]) || sp.equals(board.castledown[3])) {
+      if (moveChack(cha, tmp = Move.LEFTUP.go(sp))) {        
+        moveChack(cha, MoveLEFTUP.go(tmp);
+      }
+    } else if (sp.equals(board.castleup[4]) || sp.equals(board.castledown[4])) {
+        moveChack(cha, Move.RIGHTUP.go(sp));
+        moveChack(cha, Move.RIGHTDOWN.go(sp));
+        moveChack(cha, Move.LEFTDOWN.go(sp));
+        moveChack(cha, Move.LEFTUP.go(sp));
+    } 
     return points.getMovable();
   }
 
   private boolean moveChack(Piece cha, Point p) {
     tmp_piece = board.getPiece(p);
     if (tmp_piece == null) {
+      // 빈공간
       points.add(p);
       return true;
     }
     if (cha.isTeam(tmp_piece)) {
+      // 잡을수있는말
       points.add(p);
     }
     return false;
