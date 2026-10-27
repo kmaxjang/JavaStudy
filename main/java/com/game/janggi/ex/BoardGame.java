@@ -68,7 +68,8 @@ public class BoardGame {
     Iterator<Piece> i = bd.getPieceList();
     while (i.hasNext()) {
       piece = i.next();
-      board[piece.getPosition().x][piece.getPosition().y] = piece.getPieceName().NUMBER;
+      Point p= piece.getPosition();
+      board[p.x][p.y] = piece.Type().CODE;
     }
   }
 

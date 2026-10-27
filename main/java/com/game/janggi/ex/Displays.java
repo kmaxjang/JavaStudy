@@ -79,9 +79,9 @@ public class Displays {
 
 	private String getPiece(PieceSet piece) {
 		if (piece != null) {
-			switch (piece.getTeam()) {
+			switch (piece.group()) {
 			case HAN:
-				switch (piece.getName()) {
+				switch (piece.type()) {
 				case KING:
 					return "🦁";
 				case CHA:
@@ -98,7 +98,7 @@ public class Displays {
 					return "🐵";
 				}
 			case CHO:
-				switch (piece.getName()) {
+				switch (piece.type()) {
 				case KING:
 					return "🤴";
 				case CHA:
@@ -121,7 +121,7 @@ public class Displays {
 
 	public static void main(String[] args) {
 		PieceSet piece;
-		Point tmp_point = new Point();
+		Point tmp_point = Point.in(0,0);
 		Displays ds = new Displays();
 		com.game.janggi.ex.Board exboard = new com.game.janggi.ex.Board();
 
@@ -132,7 +132,7 @@ public class Displays {
 		} else {
 			ds.moveable(null);
 		}
-		tmp_point.set(1, 3);
+		tmp_point= Point.in(1, 3);
 		if (exboard.setMove(piece, tmp_point)) {
 			System.out.println("말이동");
 		}

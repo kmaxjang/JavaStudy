@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import com.game.janggi.ex.interfacemod.Piece;
-import com.game.janggi.ex.interfacemod.PieceMove;
 import com.game.janggi.ex.piece.Cha;
 import com.game.janggi.ex.piece.Jol;
 import com.game.janggi.ex.piece.King;
@@ -50,7 +49,6 @@ public class Board {
     Point.in(4, 9),
     Point.in(5, 9),
   };
-  private PieceMove pm = null;
 
   private int[] defaultpieceset = {
     1700000, 1612120, 1330300, 1141410, 1350500, 1672720, 1780800, 1203030, 1223230, 1243430,
@@ -98,7 +96,7 @@ public class Board {
         if (kill != null) {
           piece_list.remove(kill);
         }
-        piece.move(move, kill);
+     //   piece.move(move, kill);
         orderlist.add(piece);
         return true;
       }
@@ -120,33 +118,33 @@ public class Board {
   }
 
   public Iterator<Point> movable(Piece piece) {
-    switch (piece.getName()) {
+    switch (piece.type()) {
       case CHA:
-        pm = new Cha();
+     //   pm = new Cha();
         System.out.println("차");
         break;
       case POO:
-        pm = new Poo();
+      //  pm = new Poo();
         System.out.println("포");
         break;
       case MA:
-        pm = new Ma();
+      //  pm = new Ma();
         System.out.println("마");
         break;
       case SAG:
-        pm = new Sag();
+      //  pm = new Sag();
         System.out.println("상");
         break;
       case JOL:
-        pm = new Jol();
+     //   pm = new Jol();
         System.out.println("졸");
         break;
       case SA:
-        pm = new Sa();
+      //  pm = new Sa();
         System.out.println("사");
         break;
       case KING:
-        pm = new King();
+     //   pm = new King();
         System.out.println("왕");
         break;
     }

@@ -29,8 +29,8 @@ public enum Move {
     }
     return Point.in(tmpx, tmpy);
   }
-
-  public boolean scope(Point p) {
+// p에서 move 만큼 이동후 범위판단
+  public boolean isScope(Point p) {
     if(p == null) return false;
     return !(p.x + movex < min_x || p.x + movex > max_x || 
         py + movey < min_y || py + movey > max_y);

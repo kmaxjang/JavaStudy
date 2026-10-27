@@ -33,17 +33,17 @@ public class PieceSet implements Piece {
   }
 
   @Override
-  public boolean isTeam(Piece piece) {
+  public boolean isGroup(Piece piece) {
     return false;
   }
 
   @Override
-  public Team getTeam() {
+  public Group group() {
     return Team.get(parseInt(PieceCode.TEAM));
   }
 
   @Override
-  public PieceName getName() {    
+  public Types types() {    
     return PieceName.get(parseInt(PieceCode.PIECE_NAME));
   }
 
@@ -78,7 +78,7 @@ public class PieceSet implements Piece {
   }
 
   @Override
-  public Point getPosition() {
+  public Point position() {
       now_point.setX(parseInt(PieceCode._X));
       now_point.setY(parseInt(PieceCode._Y));
     return now_point;

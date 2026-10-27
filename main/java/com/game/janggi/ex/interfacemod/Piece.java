@@ -6,18 +6,6 @@ import com.game.janggi.ex.util.Point;
 
 public interface Piece {
 
-  public enum PieceCode {
-    GROUP(0), //
-    PIECE_NAME(1), //
-    POINT(2); //
-
-    public final int CODE;
-
-    private PieceCode(int code) {
-      this.CODE = code;
-    }
-  };
-
   public enum Group {
     CHO(1), //
     HAN(2);
@@ -39,7 +27,7 @@ public interface Piece {
     }
   }
 
-  public enum Types {
+  public enum Type {
     KING(1), //
     JOL(2), //
     SA(3), //
@@ -50,11 +38,11 @@ public interface Piece {
 
     public final int CODE;
 
-    private Types(int code) {
+    private Type(int code) {
       CODE = code;
     }
 
-    public static Types get(int code) {
+    public static Type get(int code) {
       switch (code) {
         case 1:
           return KING;
@@ -75,17 +63,9 @@ public interface Piece {
     }
   }
 
-  public Types types(); // 장기말 이름 왕 차 포 마 상 쫄(병) 사
+  public Group group(); // 초 한
+  
+  public Type type(); // 장기말 왕 차 포 마 상 쫄(병) 사
+  public Point getPosition(); // 현재위치
 
-  public Team group(); // 초 한
-
-  public Point position(); // 현재위치
-
-  public boolean isGroup(); // 장기 편 true= 한 false= 초
-
-  public int info(); // 문자정보 7자리
-
-  public int parseInt(PieceCode p); // 7자리 개별정수
-
-  public boolean move(Point move, Piece killclass); // 이동
 }

@@ -9,13 +9,19 @@ import com.game.janggi.ex.util.Move;
 import com.game.janggi.ex.util.Point;
 import com.game.janggi.ex.util.Points;
 
-public class Cha implements PieceMove {
+public class Cha extends Piece implements PieceMove {
 
   private Board board;
   private Points points = new Points(21);
   private Piece tmp_piece;
+  private Point point;
+  private Point oldpoint;
+  private Type kill = null;
 
-  public Cha() {}
+  public Cha(Group group,Type Type,Point point) {
+    super(group, type);
+    this.point = point;
+  }
 
   /*
    * 
@@ -24,12 +30,12 @@ public class Cha implements PieceMove {
     this.board = b;
     points.clear();
     
-    final Point sp = cha.position();
+    final Point sp = getPosition();
     for(int loop = 0; loop <loop.length ; loop++) {
       Point tmp = sp;
       Move move= Move.loop[loop];
-      while (move.scope(tmp) && moveChack(cha, move.go(tmp))) {
-        tmp = move.go(tmp);
+      while (move.isScope(tmp) && moveChack(cha,tmp= move.go(tmp))) {
+       // tmp = move.go(tmp);
       }
     }
     
